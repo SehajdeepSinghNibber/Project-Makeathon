@@ -30,11 +30,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  investmentHorizon: {
-    type: String,
-    enum: ['short', 'medium', 'long'],
-    required: true
-  },
   riskProfile: {
     type: String,
     enum: ['Conservative', 'Balanced', 'Aggressive'],

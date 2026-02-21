@@ -18,6 +18,8 @@ import { setToastFunction } from "./services/api.js";
 import ExpertAdvice from "./pages/ExpertAdvice.jsx";
 import DashboardLayout from "./components/DashboardLayout";
 
+import Compare from "./pages/Compare.jsx";
+
 function AppContent() {
   const { user } = useAuth();
   const toast = useToast();
@@ -58,6 +60,14 @@ function AppContent() {
             element={user ? (
               <DashboardLayout>
                 <ExpertAdvice />
+              </DashboardLayout>
+            ) : <Navigate to="/login" />}
+          />
+          <Route
+            path="/compare"
+            element={user ? (
+              <DashboardLayout>
+                <Compare />
               </DashboardLayout>
             ) : <Navigate to="/login" />}
           />
