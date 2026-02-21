@@ -27,6 +27,9 @@ import {
   FiLock,
   FiBarChart2,
   FiSmartphone,
+  FiTrendingUp,
+  FiUserCheck,
+  FiUser,
 } from "react-icons/fi";
 
 const MotionBox = chakra(motion.div, {
@@ -127,7 +130,7 @@ const LandingPage = () => {
 
       {/* 2️⃣ Hero Section */}
       <Box
-        pt={{ base: 32, md: 48 }}
+        pt={{ base: 0, md: 36  }}
         pb={{ base: 20, md: 32 }}
         position="relative"
         bg="white"
@@ -238,31 +241,31 @@ const LandingPage = () => {
         <Container maxW="container.xl">
           <VStack spacing={16}>
             <VStack spacing={4} textAlign="center">
-              <Heading size="2xl" fontWeight="800" color="black">
-                Designed for your lifestyle
+              <Heading size="2xl" fontWeight="800" color="brand.500">
+                Our Analysis, Your Investments
               </Heading>
               <Text fontSize="lg" color={textColor} maxW="2xl">
-                Powerful tools that make managing your money simpler, faster,
-                and more secure.
+                Powerful tools that make managing your money better, simpler and
+                risk-proof.
               </Text>
             </VStack>
 
             <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10}>
               {[
                 {
-                  title: "Secure Payments",
-                  desc: "State-of-the-art encryption ensures your transactions are always protected.",
-                  icon: FiLock,
+                  title: "Portfolio Analyser",
+                  desc: "Identifying overlapping sectors and stock concentration ",
+                  icon: FiBarChart2,
                 },
                 {
                   title: "AI Insights",
                   desc: "Personalized recommendations to help you make smarter investment choices.",
-                  icon: FiBarChart2,
+                  icon: FiTrendingUp,
                 },
                 {
-                  title: "Mobile First",
-                  desc: "Manage your entire portfolio from the palm of your hand, anywhere in the world.",
-                  icon: FiSmartphone,
+                  title: "Professional Support",
+                  desc: "Consult NISM certified, AMFI registered investment advisors",
+                  icon: FiUser,
                 },
               ].map((feature, idx) => (
                 <MotionBox

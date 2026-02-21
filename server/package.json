@@ -4,7 +4,7 @@
   "description": "Backend server for FundLens AI portfolio analysis",
   "main": "server.js",
   "scripts": {
-    "start": "bun server.mjs",
+    "start": "node server.mjs",
     "dev": "nodemon server.mjs",
     "test": "jest"
   },
