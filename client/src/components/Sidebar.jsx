@@ -62,7 +62,7 @@ const NavItem = ({ icon, children, active, href }) => {
 const Sidebar = ({ currentPath }) => {
   return (
     <Box
-      transition="3s ease"
+      transition="margin-left 0.3s ease"
       bg="white"
       borderRight="1px"
       borderRightColor="gray.100"
@@ -70,15 +70,16 @@ const Sidebar = ({ currentPath }) => {
       pos="fixed"
       h="full"
       display={{ base: 'none', md: 'block' }}
+      zIndex="sticky"
     >
-      <VStack h="full" spacing={0} align="stretch" py={8}>
-        <Flex px={8} mb={10} align="center">
-          <Heading size="md" color="brand.500" fontWeight="800">
+      <VStack h="full" spacing={0} align="stretch">
+        <Flex px={8} h="72px" align="center" borderBottom="1px" borderBottomColor="gray.50" mb={6}>
+          <Heading size="md" color="brand.500" fontWeight="800" letterSpacing="tight">
             Nivesh Assist
           </Heading>
         </Flex>
 
-        <VStack spacing={2} align="stretch" flex={1}>
+        <VStack spacing={1} align="stretch" px={3} flex={1}>
           <NavItem icon={FiHome} active={currentPath === '/dashboard'} href="/dashboard">
             Dashboard
           </NavItem>
@@ -88,12 +89,9 @@ const Sidebar = ({ currentPath }) => {
           <NavItem icon={FiPieChart} active={currentPath === '/advice'} href="/advice">
             Expert Advice
           </NavItem>
-          <NavItem icon={FiTrendingUp} href="#">
-             Analytics
-          </NavItem>
         </VStack>
 
-        <VStack spacing={2} align="stretch" pt={8} borderTop="1px" borderColor="gray.100">
+        <VStack spacing={1} align="stretch" p={3} borderTop="1px" borderColor="gray.50" mb={4}>
           <NavItem icon={FiUser} href="#">
             Profile
           </NavItem>

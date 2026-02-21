@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Box,
+  Divider,
   Button,
   Container,
   Flex,
@@ -336,7 +337,7 @@ const LandingPage = () => {
           </SimpleGrid>
           <Divider mb={8} />
           <Flex justify="space-between" align="center" direction={{ base: 'column', md: 'row' }} gap={4}>
-            <Text fontSize="xs" color="gray.400">© 2024 Nivesh Assist. All rights reserved.</Text>
+            <Text fontSize="xs" color="gray.400">© 2026 Nivesh Assist. All rights reserved.</Text>
             <HStack spacing={6}>
               <Link fontSize="xs" color="gray.400">Accessibility</Link>
               <Link fontSize="xs" color="gray.400">Cookies</Link>
@@ -346,9 +347,7 @@ const LandingPage = () => {
         </Container>
       </Box>
     </Box>
-  );
+    );
 };
-
-const Divider = ({ ...props }) => <Box h="1px" bg="gray.100" w="full" {...props} />;
 
 export default LandingPage;

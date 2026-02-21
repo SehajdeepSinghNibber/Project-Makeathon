@@ -171,7 +171,7 @@ const ExpertAdvice = () => {
   return (
     <Container maxW="6xl" py={10}>
       <Stack spacing={6} textAlign="center">
-        <Heading>Expert Financial Advisors</Heading>
+        <Heading color="black">Expert Financial Advisors</Heading>
         <Text color="gray.800">
           Book a 1-on-1 session with experienced mutual fund professionals
         </Text>
@@ -184,7 +184,7 @@ const ExpertAdvice = () => {
               <HStack spacing={4}>
                 <Avatar name={c.name} />
                 <Stack spacing={0}>
-                  <Heading size="sm">{c.name}</Heading>
+                  <Heading size="sm" color="black">{c.name}</Heading>
                   <Badge colorScheme="brand">{c.experience}</Badge>
                 </Stack>
               </HStack>
