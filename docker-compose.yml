@@ -27,7 +27,8 @@ services:
       - PORT=5000
       - MONGODB_URI=mongodb://admin:admin123@mongodb:27017/fundlens?authSource=admin
       - JWT_SECRET=${JWT_SECRET:-your_secure_jwt_secret_change_this}
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - MEGALLM_API_KEY=${MEGALLM_API_KEY}
+      - MEGALLM_MODEL=${MEGALLM_MODEL:-gpt-4o-mini}
     depends_on:
       - mongodb
     networks:

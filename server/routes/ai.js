@@ -1,7 +1,7 @@
 const express = require("express");
 const Fund = require("../models/Fund");
 const User = require("../models/User");
-const geminiService = require("../services/geminiService");
+const aiService = require("../services/openaiService");
 const portfolioAnalyzer = require("../utils/portfolioAnalyzer");
 const { analyzePortfolioDetailed } = require("../utils/detailedAnalyzer");
 
@@ -28,7 +28,7 @@ router.post("/insights", async (req, res) => {
 
     if (userType === "new") {
       // New investor: Just need answers
-      const insights = await geminiService.generateInsights({
+      const insights = await aiService.generateAIInsights({
         userType: "new",
         answers: req.body.answers || {}
       });
@@ -52,7 +52,7 @@ router.post("/insights", async (req, res) => {
       const analysisData = analyzePortfolioDetailed(funds);
 
       // Generate insights using both data
-      const insights = await geminiService.generateInsights({
+      const insights = await aiService.generateAIInsights({
         userType: "existing",
         portfolioData,
         analysisData
