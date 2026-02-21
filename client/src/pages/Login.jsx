@@ -39,7 +39,7 @@ const Login = () => {
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  
+
   const { login, register } = useAuth()
   const navigate = useNavigate()
   const toast = useToast()
@@ -117,8 +117,8 @@ const Login = () => {
                 {isLogin ? 'Welcome Back' : 'Create Account'}
               </Heading>
               <Text color={textColor}>
-                {isLogin 
-                  ? 'Sign in to manage your financial future' 
+                {isLogin
+                  ? 'Sign in to manage your financial future'
                   : 'Start your investment journey with us today'
                 }
               </Text>

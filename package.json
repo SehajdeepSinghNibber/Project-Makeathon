@@ -1,0 +1,20 @@
+{
+  "name": "head",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "concurrently \"bun run client\" \"bun run server\"",
+    "client": "cd client && bun run dev",
+    "server": "cd server && bun run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SehajdeepSinghNibber/Project-Makeathon.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

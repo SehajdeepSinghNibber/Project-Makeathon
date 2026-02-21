@@ -40,12 +40,12 @@ const Topbar = () => {
         <InputLeftElement pointerEvents="none">
           <FiSearch color="gray" />
         </InputLeftElement>
-        <Input 
+        <Input
           color="black"
-          placeholder="Search your investments..." 
-          bg="gray.50" 
+          placeholder="Search your investments..."
+          bg="gray.50"
           _placeholder={{ color: "gray" }}
-          border="none" 
+          border="none"
           borderRadius="xl"
           _focus={{ bg: 'white', border: '1px', borderColor: 'brand.500' }}
         />
@@ -98,9 +98,9 @@ const Topbar = () => {
             <MenuItem borderRadius="lg" _hover={{ bg: 'brand.50', color: 'brand.500' }}>Settings</MenuItem>
             <MenuItem borderRadius="lg" _hover={{ bg: 'brand.50', color: 'brand.500' }}>Billing</MenuItem>
             <MenuDivider />
-            <MenuItem 
-              onClick={logout} 
-              borderRadius="lg" 
+            <MenuItem
+              onClick={logout}
+              borderRadius="lg"
               color="red.500"
               _hover={{ bg: 'red.50' }}
             >
