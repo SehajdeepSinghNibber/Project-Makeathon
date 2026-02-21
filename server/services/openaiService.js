@@ -1,39 +1,86 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai")
+const OpenAI = require("openai")
+
+const MODEL = process.env.MEGALLM_MODEL || "gpt-4o-mini"
+const DEFAULT_BASE_URL = "https://ai.megallm.io/v1"
+let cachedMegaLLMClient = null
+
+const getMegaLLMClient = () => {
+  if (!cachedMegaLLMClient) {
+    cachedMegaLLMClient = new OpenAI({
+      baseURL: process.env.MEGALLM_BASE_URL || DEFAULT_BASE_URL,
+      apiKey: process.env.MEGALLM_API_KEY
+    })
+  }
+  return cachedMegaLLMClient
+}
+
+const sanitizeJSON = (text = "") => {
+  const withoutCodeFence = text
+    .replace(/```json/gi, "")
+    .replace(/```/g, "")
+    .trim()
+
+  const firstBrace = withoutCodeFence.indexOf("{")
+  const lastBrace = withoutCodeFence.lastIndexOf("}")
+  if (firstBrace === -1 || lastBrace === -1) {
+    return withoutCodeFence
+  }
+  return withoutCodeFence.slice(firstBrace, lastBrace + 1)
+}
+
+const extractResponseText = response => {
+  if (response?.output_text) {
+    return response.output_text
+  }
+
+  if (!Array.isArray(response?.output)) {
+    return ""
+  }
+
+  return response.output
+    .map(block =>
+      (block?.content || [])
+        .map(part => part?.text || "")
+        .join("")
+    )
+    .join("")
+}
 
 /**
- * generateInsights:
+ * generateAIInsights:
  * - userType: "existing" | "new"
  * - answers: object for new users
  * - portfolioData: object for existing users
  * - analysisData: detailed analysis from detailedAnalyzer (for existing users with deep analysis)
  */
-const generateInsights = async ({
+const generateAIInsights = async ({
   userType,
   answers = {},
   portfolioData = {},
   analysisData = {}
 }) => {
   try {
-    if (!process.env.GEMINI_API_KEY) {
+    if (!process.env.MEGALLM_API_KEY) {
       return mockResponse(userType, answers, portfolioData, analysisData)
     }
 
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
-    const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
-      generationConfig: { temperature: 0.3 }
-    })
-
+    const megaLLM = getMegaLLMClient()
     const prompt = userType === "existing" && analysisData.totalFunds
       ? buildDetailedPrompt(userType, analysisData, portfolioData)
       : buildPrompt(userType, answers, portfolioData)
 
-    const result = await model.generateContent(prompt)
-    const text = result.response.text()
+    const response = await megaLLM.responses.create({
+      model: MODEL,
+      temperature: 0.3,
+      max_output_tokens: 2048,
+      input: prompt
+    })
 
-    return JSON.parse(text)
+    const text = extractResponseText(response)
+    const sanitized = sanitizeJSON(text)
+    return JSON.parse(sanitized)
   } catch (err) {
-    console.error("Gemini error:", err)
+    console.error("MegaLLM error:", err)
     return mockResponse(userType, answers, portfolioData, analysisData)
   }
 }
@@ -341,7 +388,6 @@ const mockResponse = (userType, answers = {}, portfolioData = {}, analysisData =
 
     const riskAlignment = `Your portfolio does not fully align with a ${riskProfile} profile due to concentration issues. With the suggested improvements—especially adding new sectors and reducing overlaps—it will better reflect your intended risk appetite.`
 
-    // Detailed structures for frontend display
     const overlappingSharesDetail = overlaps.map(o => ({
       company: o.company,
       numberOfFunds: o.numberOfFunds,
@@ -395,7 +441,6 @@ const mockResponse = (userType, answers = {}, portfolioData = {}, analysisData =
     }
   }
 
-  // NEW USER
   const monthly = toNumber(answers.monthlyInvestment)
   const recommendedEmergency = monthly ? `~₹${(monthly * 6).toLocaleString()}` : "6 months of expenses"
   const hasInsurance = String(answers.hasInsurance || "").toLowerCase()
@@ -432,4 +477,4 @@ const mockResponse = (userType, answers = {}, portfolioData = {}, analysisData =
   }
 }
 
-module.exports = { generateInsights }
+module.exports = { generateAIInsights }
