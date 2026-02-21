@@ -111,18 +111,18 @@ const LandingPage = () => {
               >
                 Log In
               </Button>
-              <Button
-                as="a"
-                href="/signup"
-                colorScheme="brand"
-                borderRadius="full"
-                px={6}
-                size="sm"
-                fontWeight="700"
-                color="white"
-              >
-                Sign Up
-              </Button>
+              <Link href="/login" _hover={{ textDecoration: "none" }}>
+                <Button
+                  colorScheme="brand"
+                  borderRadius="full"
+                  px={6}
+                  size="sm"
+                  fontWeight="700"
+                  color="white"
+                >
+                  Sign Up
+                </Button>
+              </Link>
             </HStack>
           </Flex>
         </Container>
@@ -165,6 +165,7 @@ const LandingPage = () => {
                 Support.
               </Text>
               <Stack direction={{ base: "column", sm: "row" }} spacing={4}  paddingTop={"10px"}>
+                <Link href="/dashboard" _hover={{ textDecoration: "none" }}>
                 <Button
                   colorScheme="brand"
                   size="lg"
@@ -177,6 +178,7 @@ const LandingPage = () => {
                 >
                   Get Started
                 </Button>
+                </Link>
                 <Button
                   variant="outline"
                   colorScheme="brand"
@@ -399,18 +401,20 @@ const LandingPage = () => {
                 Join over 400 million users worldwide who trust Nivesh Assist
                 for their daily financial needs.
               </Text>
-              <Button
-                colorScheme="brand"
-                color="white"
-                size="lg"
-                px={12}
-                h="16"
-                borderRadius="full"
-                fontSize="lg"
-                fontWeight="800"
-              >
-                Create your free account
-              </Button>
+                <Link href="/login" _hover={{ textDecoration: "none" }}>
+                  <Button
+                    colorScheme="brand"
+                    color="white"
+                    size="lg"
+                    px={12}
+                    h="16"
+                    borderRadius="full"
+                    fontSize="lg"
+                    fontWeight="800"
+                  >
+                    Create your free account
+                  </Button>
+                </Link>
             </VStack>
           </MotionBox>
         </Container>

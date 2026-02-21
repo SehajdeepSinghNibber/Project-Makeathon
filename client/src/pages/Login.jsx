@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import {
   Box,
   Container,
@@ -20,78 +20,91 @@ import {
   Flex,
   useToast,
   Icon,
-} from '@chakra-ui/react'
-import { useAuth } from '../utils/authContext.jsx'
-import { useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { FiArrowLeft } from 'react-icons/fi'
+  Image,
+} from "@chakra-ui/react";
+import logo from "../public/Gemini_Generated_Image_3nfx7p3nfx7p3nfx (1).png";
+import { useAuth } from "../utils/authContext.jsx";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { FiArrowLeft } from "react-icons/fi";
 
 const Login = () => {
-  const [isLogin, setIsLogin] = useState(true)
+  const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    age: '',
-    monthlyIncome: '',
-    investmentHorizon: '',
-    riskAppetite: ''
-  })
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+    name: "",
+    email: "",
+    password: "",
+    age: "",
+    monthlyIncome: "",
+    investmentHorizon: "",
+    riskAppetite: "",
+  });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const { login, register } = useAuth()
-  const navigate = useNavigate()
-  const toast = useToast()
+  const { login, register } = useAuth();
+  const navigate = useNavigate();
+  const toast = useToast();
 
-  const textColor = 'gray.800'
-  const headingColor = 'gray.900'
+  const textColor = "gray.800";
+  const headingColor = "gray.900";
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  const showToast = (title, description, status = 'error') => {
+  const showToast = (title, description, status = "error") => {
     toast({
       title,
       description,
       status,
       duration: 5000,
       isClosable: true,
-      position: 'top',
-    })
-  }
+      position: "top",
+    });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
     try {
       if (isLogin) {
         await login({
           email: formData.email,
-          password: formData.password
-        })
-        showToast('Login Successful', 'Welcome back to Nivesh Assist!', 'success')
+          password: formData.password,
+        });
+        showToast(
+          "Login Successful",
+          "Welcome back to Nivesh Assist!",
+          "success",
+        );
       } else {
-        await register(formData)
-        showToast('Registration Successful', 'Welcome to Nivesh Assist!', 'success')
+        await register(formData);
+        showToast(
+          "Registration Successful",
+          "Welcome to Nivesh Assist!",
+          "success",
+        );
       }
-      navigate('/dashboard')
+      navigate("/dashboard");
     } catch (err) {
       if (err.response) {
-        setError(err.response.data.message || 'Authentication failed. Please try again.')
+        setError(
+          err.response.data.message ||
+            "Authentication failed. Please try again.",
+        );
       } else {
-        setError('An unexpected error occurred. Please check your connection.')
+        setError("An unexpected error occurred. Please check your connection.");
       }
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <Box minH="100vh" bg="gray.50" py={20}>
@@ -102,7 +115,7 @@ const Login = () => {
           transition={{ duration: 0.5 }}
         >
           <VStack spacing={8}>
-            <Link href="/" _hover={{ textDecoration: 'none' }}>
+            <Link href="/" _hover={{ textDecoration: "none" }}>
               <HStack spacing={2} color="brand.500" fontWeight="800">
                 <Icon as={FiArrowLeft} />
                 <Text fontSize="sm">Back to Home</Text>
@@ -110,17 +123,21 @@ const Login = () => {
             </Link>
 
             <Box textAlign="center">
-              <Heading size="lg" color="brand.500" fontWeight="800" mb={4}>
-                Nivesh Assist
-              </Heading>
+              <Flex justify="center" mb={4}>
+                <Image
+                  src={logo}
+                  alt="Nivesh Assist Logo"
+                  h="60px"
+                  objectFit="contain"
+                />
+              </Flex>
               <Heading size="xl" color={headingColor} mb={2}>
-                {isLogin ? 'Welcome Back' : 'Create Account'}
+                {isLogin ? "Welcome Back" : "Create Account"}
               </Heading>
               <Text color={textColor}>
                 {isLogin
-                  ? 'Sign in to manage your financial future'
-                  : 'Start your investment journey with us today'
-                }
+                  ? "Sign in to manage your financial future"
+                  : "Start your investment journey with us today"}
               </Text>
             </Box>
 
@@ -134,12 +151,18 @@ const Login = () => {
                     </Alert>
                   )}
 
-                  <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+                  <form onSubmit={handleSubmit} style={{ width: "100%" }}>
                     <VStack spacing={5}>
                       {!isLogin && (
                         <>
                           <FormControl isRequired>
-                            <FormLabel fontSize="sm" fontWeight="700" color={"gray"}>Full Name</FormLabel>
+                            <FormLabel
+                              fontSize="sm"
+                              fontWeight="700"
+                              color={"gray"}
+                            >
+                              Full Name
+                            </FormLabel>
                             <Input
                               type="text"
                               name="name"
@@ -151,7 +174,13 @@ const Login = () => {
                           </FormControl>
 
                           <FormControl isRequired>
-                            <FormLabel fontSize="sm" fontWeight="700" color={"gray"}>Age</FormLabel>
+                            <FormLabel
+                              fontSize="sm"
+                              fontWeight="700"
+                              color={"gray"}
+                            >
+                              Age
+                            </FormLabel>
                             <Input
                               color={"gray"}
                               type="number"
@@ -164,7 +193,13 @@ const Login = () => {
                           </FormControl>
 
                           <FormControl isRequired>
-                            <FormLabel fontSize="sm" fontWeight="700" color={"gray"}>Monthly Income Range</FormLabel>
+                            <FormLabel
+                              fontSize="sm"
+                              fontWeight="700"
+                              color={"gray"}
+                            >
+                              Monthly Income Range
+                            </FormLabel>
                             <Select
                               color={"gray"}
                               name="monthlyIncome"
@@ -174,8 +209,12 @@ const Login = () => {
                               placeholder="Select range"
                             >
                               <option value="0-400000">₹0 - ₹4,00,000</option>
-                              <option value="400001-800000">₹4,00,001 - ₹8,00,000</option>
-                              <option value="800001-1200000">₹8,00,001 - ₹12,00,000</option>
+                              <option value="400001-800000">
+                                ₹4,00,001 - ₹8,00,000
+                              </option>
+                              <option value="800001-1200000">
+                                ₹8,00,001 - ₹12,00,000
+                              </option>
                               <option value="1200001+">₹12,00,001+</option>
                             </Select>
                           </FormControl>
@@ -183,7 +222,13 @@ const Login = () => {
                       )}
 
                       <FormControl isRequired>
-                        <FormLabel fontSize="sm" fontWeight="700" color={"gray"}>Email Address</FormLabel>
+                        <FormLabel
+                          fontSize="sm"
+                          fontWeight="700"
+                          color={"gray"}
+                        >
+                          Email Address
+                        </FormLabel>
                         <Input
                           type="email"
                           bg={"white"}
@@ -198,7 +243,13 @@ const Login = () => {
                       </FormControl>
 
                       <FormControl isRequired>
-                        <FormLabel fontSize="sm" fontWeight="700" color={"gray"}>Password</FormLabel>
+                        <FormLabel
+                          fontSize="sm"
+                          fontWeight="700"
+                          color={"gray"}
+                        >
+                          Password
+                        </FormLabel>
                         <Input
                           bg={"white"}
                           color={"black"}
@@ -226,7 +277,7 @@ const Login = () => {
                         color={"white"}
                         mt={4}
                       >
-                        {isLogin ? 'Log In' : 'Sign Up'}
+                        {isLogin ? "Log In" : "Sign Up"}
                       </Button>
                     </VStack>
                   </form>
@@ -234,7 +285,9 @@ const Login = () => {
                   <Divider />
 
                   <Text textAlign="center" fontSize="sm" color={textColor}>
-                    {isLogin ? "New to Nivesh Assist?" : "Already have an account?"}
+                    {isLogin
+                      ? "New to Nivesh Assist?"
+                      : "Already have an account?"}
                     <Button
                       variant="link"
                       colorScheme="brand"
@@ -243,7 +296,7 @@ const Login = () => {
                       fontWeight="700"
                       onClick={() => setIsLogin(!isLogin)}
                     >
-                      {isLogin ? 'Create an account' : 'Log in here'}
+                      {isLogin ? "Create an account" : "Log in here"}
                     </Button>
                   </Text>
                 </VStack>
@@ -251,15 +304,21 @@ const Login = () => {
             </Card>
 
             <HStack spacing={6} pt={4}>
-              <Link fontSize="xs" color="gray.400">Privacy Policy</Link>
-              <Link fontSize="xs" color="gray.400">Terms of Service</Link>
-              <Link fontSize="xs" color="gray.400">Help Center</Link>
+              <Link fontSize="xs" color="gray.400">
+                Privacy Policy
+              </Link>
+              <Link fontSize="xs" color="gray.400">
+                Terms of Service
+              </Link>
+              <Link fontSize="xs" color="gray.400">
+                Help Center
+              </Link>
             </HStack>
           </VStack>
         </motion.div>
       </Container>
     </Box>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
