@@ -25,16 +25,18 @@ const Topbar = () => {
 
   return (
     <Flex
-      ml={{ base: 0, md: 64 }}
-      px={8}
-      height="20"
+      px={{ base: 4, md: 8 }}
+      height="72px"
       alignItems="center"
-      bg="white"
+      bg="rgba(255, 255, 255, 0.8)"
+      backdropFilter="blur(10px)"
       borderBottomWidth="1px"
       borderBottomColor="gray.100"
       justifyContent="space-between"
       pos="sticky"
       top="0"
+      zIndex="docked"
+      boxShadow="sm"
     >
       <InputGroup maxW="md" display={{ base: 'none', md: 'flex' }}>
         <InputLeftElement pointerEvents="none">
@@ -42,7 +44,7 @@ const Topbar = () => {
         </InputLeftElement>
         <Input
           color="black"
-          placeholder="Search your investments..."
+          placeholder="Search your investments..." 
           bg="gray.50"
           _placeholder={{ color: "gray" }}
           border="none"
