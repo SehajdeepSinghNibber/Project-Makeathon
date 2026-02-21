@@ -228,9 +228,9 @@ const ExistingUserInsights = ({ insights }) => (
 
     {/* Adjustments */}
     {insights.suggestedAdjustments && (
-      <Card bg="gray.900" color="white">
+      <Card bg="white" color="black">
         <CardBody p={8}>
-          <Heading size="md" mb={4} color="white">Next Steps & Action Plan</Heading>
+          <Heading size="md" mb={4} color="black">Next Steps & Action Plan</Heading>
           <Text opacity={0.9} lineHeight="tall">{insights.suggestedAdjustments}</Text>
         </CardBody>
       </Card>
@@ -551,6 +551,7 @@ const AIInsights = () => {
                     fontSize="md"
                     onClick={() => setUserType("existing")}
                     leftIcon={<InfoIcon />}
+                    color="white"
                   >
                     Yes, Analyze My Portfolio
                   </Button>
@@ -562,6 +563,7 @@ const AIInsights = () => {
                     fontSize="md"
                     onClick={() => setUserType("new")}
                     bg="gray.50"
+                    color="black"
                   >
                     No, I'm New to Investing
                   </Button>
@@ -746,6 +748,7 @@ const AIInsights = () => {
                       onClick={analyzePortfolio}
                       isDisabled={!portfolioData || loading}
                       mb={4}
+                      color="white"
                     >
                       {loading ? <Spinner size="sm" mr={2} /> : null}
                       Run Intelligence Analysis

@@ -139,7 +139,7 @@ const Login = () => {
                       {!isLogin && (
                         <>
                           <FormControl isRequired>
-                            <FormLabel fontSize="sm" fontWeight="700">Full Name</FormLabel>
+                            <FormLabel fontSize="sm" fontWeight="700" color={"gray"}>Full Name</FormLabel>
                             <Input
                               type="text"
                               name="name"
@@ -151,8 +151,9 @@ const Login = () => {
                           </FormControl>
 
                           <FormControl isRequired>
-                            <FormLabel fontSize="sm" fontWeight="700">Age</FormLabel>
+                            <FormLabel fontSize="sm" fontWeight="700" color={"gray"}>Age</FormLabel>
                             <Input
+                              color={"gray"}
                               type="number"
                               name="age"
                               placeholder="25"
@@ -163,8 +164,9 @@ const Login = () => {
                           </FormControl>
 
                           <FormControl isRequired>
-                            <FormLabel fontSize="sm" fontWeight="700">Monthly Income Range</FormLabel>
+                            <FormLabel fontSize="sm" fontWeight="700" color={"gray"}>Monthly Income Range</FormLabel>
                             <Select
+                              color={"gray"}
                               name="monthlyIncome"
                               value={formData.monthlyIncome}
                               onChange={handleChange}
@@ -181,11 +183,14 @@ const Login = () => {
                       )}
 
                       <FormControl isRequired>
-                        <FormLabel fontSize="sm" fontWeight="700">Email Address</FormLabel>
+                        <FormLabel fontSize="sm" fontWeight="700" color={"gray"}>Email Address</FormLabel>
                         <Input
                           type="email"
+                          bg={"white"}
+                          color={"black"}
                           name="email"
                           placeholder="name@email.com"
+                          _placeholder={{ color: "gray.500" }}
                           value={formData.email}
                           onChange={handleChange}
                           h="12"
@@ -193,11 +198,14 @@ const Login = () => {
                       </FormControl>
 
                       <FormControl isRequired>
-                        <FormLabel fontSize="sm" fontWeight="700">Password</FormLabel>
+                        <FormLabel fontSize="sm" fontWeight="700" color={"gray"}>Password</FormLabel>
                         <Input
+                          bg={"white"}
+                          color={"black"}
                           type="password"
                           name="password"
                           placeholder="••••••••"
+                          _placeholder={{ color: "gray.500" }}
                           value={formData.password}
                           onChange={handleChange}
                           h="12"
@@ -215,6 +223,7 @@ const Login = () => {
                         loadingText="Processing..."
                         fontSize="md"
                         fontWeight="700"
+                        color={"white"}
                         mt={4}
                       >
                         {isLogin ? 'Log In' : 'Sign Up'}

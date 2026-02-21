@@ -38,22 +38,8 @@ const Topbar = () => {
       zIndex="docked"
       boxShadow="sm"
     >
-      <InputGroup maxW="md" display={{ base: 'none', md: 'flex' }}>
-        <InputLeftElement pointerEvents="none">
-          <FiSearch color="gray" />
-        </InputLeftElement>
-        <Input
-          color="black"
-          placeholder="Search your investments..." 
-          bg="gray.50"
-          _placeholder={{ color: "gray" }}
-          border="none"
-          borderRadius="xl"
-          _focus={{ bg: 'white', border: '1px', borderColor: 'brand.500' }}
-        />
-      </InputGroup>
 
-      <HStack spacing={6}>
+      <HStack ml="934" alignItems="flex-end" spacing={6}>
         <IconButton
           size="lg"
           variant="ghost"

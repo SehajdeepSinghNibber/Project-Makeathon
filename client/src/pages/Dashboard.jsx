@@ -39,6 +39,7 @@ import { FiTrendingUp, FiActivity, FiPieChart, FiShield } from 'react-icons/fi'
 import { DeleteIcon, AddIcon, CloseIcon } from '@chakra-ui/icons'
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import api from '../services/api.js'
+import { color } from 'framer-motion'
 
 const Dashboard = () => {
   const [funds, setFunds] = useState([])
@@ -840,12 +841,14 @@ const sectorChartData = getAllPortfolioSectorData();
                   <form onSubmit={handleAddFund}>
                     <VStack spacing={4} align="stretch">
                       <FormControl isRequired>
-                        <FormLabel fontSize="xs" fontWeight="700">Select Mutual Fund</FormLabel>
+                        <FormLabel fontSize="xs" fontWeight="700" color={"gray"}>Select Mutual Fund</FormLabel>
                         <Select
                           placeholder="Search funds..."
                           value={newFund.name}
+                          _placeholder={{ color: "gray" }}
                           onChange={(e) => setNewFund({ ...newFund, name: e.target.value })}
                           bg="white"
+                          color="black"
                         >
                           {[...fundNamesByCategory.largeCap, ...fundNamesByCategory.midCap, ...fundNamesByCategory.hybrid].map((fund) => (
                             <option key={fund} value={fund}>{fund}</option>
@@ -853,17 +856,19 @@ const sectorChartData = getAllPortfolioSectorData();
                         </Select>
                       </FormControl>
                       <FormControl isRequired>
-                        <FormLabel fontSize="xs" fontWeight="700">Amount (₹)</FormLabel>
+                        <FormLabel fontSize="xs" fontWeight="700" color={"gray"}>Amount (₹)</FormLabel>
                         <Input
+                          color="gray"  
                           type="number"
                           value={newFund.amount}
                           onChange={(e) => setNewFund({ ...newFund, amount: e.target.value })}
                           bg="white"
+                          _placeholder={{color:"gray"}}
                           placeholder="e.g. 50000"
                         />
                       </FormControl>
                       <HStack>
-                        <Button type="submit" colorScheme="brand" size="sm" w="full">Add Fund</Button>
+                        <Button type="submit" colorScheme="brand" size="sm" w="full" color="white">Add Fund</Button>
                         <Button variant="ghost" size="sm" w="full" onClick={() => setShowAddForm(false)}>Cancel</Button>
                       </HStack>
                     </VStack>
