@@ -73,12 +73,26 @@ const Sidebar = ({ currentPath }) => {
       zIndex="sticky"
     >
       <VStack h="full" spacing={0} align="stretch">
-        <Flex px={8} h="72px" align="center" borderBottom="1px" borderBottomColor="gray.50" mb={6}>
-          <Heading size="md" color="brand.500" fontWeight="800" letterSpacing="tight">
-            Nivesh Assist
-          </Heading>
+        <Flex
+          px={8}
+          h="72px"
+          align="center"
+          borderBottom="1px"
+          borderBottomColor="gray.50"
+          mb={6}
+        >
+          <Link href="/" _hover={{ textDecoration: "none" }}>
+            <Heading
+              size="md"
+              color="brand.500"
+              fontWeight="800"
+              letterSpacing="tight"
+              cursor="pointer"
+            >
+              Nivesh Assist
+            </Heading>
+          </Link>
         </Flex>
-
         <VStack spacing={1} align="stretch" px={3} flex={1}>
           <NavItem icon={FiHome} active={currentPath === '/dashboard'} href="/dashboard">
             Dashboard
@@ -88,6 +102,9 @@ const Sidebar = ({ currentPath }) => {
           </NavItem>
           <NavItem icon={FiPieChart} active={currentPath === '/advice'} href="/advice">
             Expert Advice
+          </NavItem>
+          <NavItem icon={FiTrendingUp} active={currentPath === '/compare'} href="/compare">
+            Compare MFs
           </NavItem>
         </VStack>
 

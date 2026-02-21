@@ -164,7 +164,7 @@ const LandingPage = () => {
                 through Transparent Information, AI Insights and Professional
                 Support.
               </Text>
-              <Stack direction={{ base: "column", sm: "row" }} spacing={4}>
+              <Stack direction={{ base: "column", sm: "row" }} spacing={4}  paddingTop={"10px"}>
                 <Button
                   colorScheme="brand"
                   size="lg"
@@ -172,6 +172,7 @@ const LandingPage = () => {
                   h="14"
                   fontSize="md"
                   fontWeight="700"
+                  color="white"
                   _hover={{ transform: "translateY(-2px)" }}
                 >
                   Get Started
