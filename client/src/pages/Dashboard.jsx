@@ -782,7 +782,7 @@ const sectorChartData = getAllPortfolioSectorData();
   return (
     <VStack spacing={8} align="stretch" pb={10}>
       {/* 4 Stats Cards */}
-      <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={6}>
+      <SimpleGrid columns={{ base: 1, md: 3, lg: 3 }} spacing={6}>
         <StatCard 
           label="Total Investment" 
           value={`₹${totalInvestment.toLocaleString()}`} 
@@ -797,15 +797,9 @@ const sectorChartData = getAllPortfolioSectorData();
         />
         <StatCard 
           label="Portfolio Growth" 
-          value="+12.5%" 
+          value="NaN" 
           icon={FiPieChart}
           color="green.400"
-        />
-        <StatCard 
-          label="Risk Assessment" 
-          value="Medium" 
-          icon={FiShield}
-          color="purple.400"
         />
       </SimpleGrid>
 
