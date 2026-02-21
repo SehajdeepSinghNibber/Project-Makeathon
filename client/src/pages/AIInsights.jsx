@@ -260,7 +260,7 @@ const NewUserInsights = ({ insights }) => (
     </Card>
 
     {insights.priorityChecklist && (
-      <Card>
+      <Card  color="black">
         <CardBody p={8}>
           <Heading size="md" mb={6}>✓ Priority Checklist</Heading>
           <VStack spacing={4} align="stretch">
@@ -276,9 +276,9 @@ const NewUserInsights = ({ insights }) => (
     )}
 
     {insights.investmentGuidance && (
-      <Card borderLeftWidth={4} borderLeftColor="blue.500">
+      <Card borderLeftWidth={4} borderLeftColor="blue.500" >
         <CardBody p={8}>
-          <Heading size="md" mb={4}>Strategic Investment Guidance</Heading>
+          <Heading color="black" size="md" mb={4}>Strategic Investment Guidance</Heading>
           <Text lineHeight="tall">{insights.investmentGuidance}</Text>
         </CardBody>
       </Card>
@@ -288,7 +288,7 @@ const NewUserInsights = ({ insights }) => (
       <Card bg="gray.900" color="white">
         <CardBody p={8}>
           <Heading size="md" mb={4} color="white">📋 Your Personalized Action Plan</Heading>
-          <Text lineHeight="tall" opacity={0.9}>{insights.nextSteps}</Text>
+          <Text  color="white" lineHeight="tall" opacity={0.9}>{insights.nextSteps}</Text>
         </CardBody>
       </Card>
     )}
@@ -594,7 +594,9 @@ const AIInsights = () => {
                     <Box>
                       <Text fontWeight="700" fontSize="sm" mb={3} color="gray.700">Insurance Coverage</Text>
                       <Select
+                        color="black"
                         placeholder="Select status"
+                        _placeholder={{color:"gray"}}
                         value={answers.hasInsurance}
                         onChange={(e) => setAnswers({ ...answers, hasInsurance: e.target.value })}
                         size="md"
@@ -610,7 +612,9 @@ const AIInsights = () => {
                     <Box>
                       <Text fontWeight="700" fontSize="sm" mb={3} color="gray.700">Financial Safety Net</Text>
                       <Select
+                        color="black"
                         placeholder="Emergency fund status"
+                        _placeholder={{color:"gray"}}
                         value={answers.hasEmergencyFund}
                         onChange={(e) => setAnswers({ ...answers, hasEmergencyFund: e.target.value })}
                         size="md"
@@ -624,7 +628,10 @@ const AIInsights = () => {
                     <Box>
                       <Text fontWeight="700" fontSize="sm" mb={3} color="gray.700">Risk Profile</Text>
                       <Select
+                        
                         placeholder="Choose risk level"
+                        _placeholder={{color:"gray"}}
+                        color="black"
                         value={answers.riskAppetite}
                         onChange={(e) => setAnswers({ ...answers, riskAppetite: e.target.value })}
                         size="md"
@@ -641,8 +648,10 @@ const AIInsights = () => {
                     <Box>
                       <Text fontWeight="700" fontSize="sm" mb={3} color="gray.700">Monthly Investment Budget</Text>
                       <Input
+                        color="black"
                         type="number"
                         placeholder="Amount in ₹"
+                        _placeholder={{color:"gray"}}
                         value={answers.monthlyInvestment}
                         onChange={(e) => setAnswers({ ...answers, monthlyInvestment: e.target.value })}
                         size="md"
@@ -654,6 +663,8 @@ const AIInsights = () => {
                       <Text fontWeight="700" fontSize="sm" mb={3} color="gray.700">Time Horizon</Text>
                       <Select
                         placeholder="How long will you invest?"
+                        color="black"
+                        _placeholder={{color:"gray"}}
                         value={answers.investmentHorizon}
                         onChange={(e) => setAnswers({ ...answers, investmentHorizon: e.target.value })}
                         size="md"
@@ -673,6 +684,7 @@ const AIInsights = () => {
                         isDisabled={!isNewUserReady || loading}
                         width="full"
                         colorScheme="brand"
+                        color="white"
                         fontSize="md"
                       >
                         {loading ? <Spinner size="sm" mr={2} /> : null}
@@ -683,7 +695,7 @@ const AIInsights = () => {
                 </SimpleGrid>
 
                 {!isNewUserReady && (
-                  <Alert variant="subtle" status="info" borderRadius="2xl">
+                  <Alert variant="subtle" status="info" borderRadius="2xl" color="black">
                     <AlertIcon />
                     Complete all fields to unlock your personalized AI investment strategy.
                   </Alert>
@@ -707,7 +719,7 @@ const AIInsights = () => {
 
                 <SimpleGrid columns={{ base: 1, md: 2 }} gap={10}>
                   <Box>
-                    <Heading size="sm" mb={6}>What we analyze:</Heading>
+                    <Heading size="sm" mb={6} color={"#444"}>What we analyze:</Heading>
                     <List spacing={4}>
                       <ListItem>
                         <HStack align="start">
