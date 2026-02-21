@@ -18,9 +18,9 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { motion, isValidMotionProp } from 'framer-motion';
-import { 
-  FiCheckCircle, 
-  FiShield, 
+import {
+  FiCheckCircle,
+  FiShield,
   FiArrowRight,
   FiLock,
   FiBarChart2,
@@ -68,7 +68,7 @@ const LandingPage = () => {
                 <Link fontWeight="600" fontSize="sm" color={headingColor} _hover={{ color: brandColor }}>Pricing</Link>
               </HStack>
             </HStack>
-            
+
             <HStack spacing={4}>
               <Button as="a" href="/login" variant="ghost" fontWeight="700" size="sm">
                 Log In
@@ -102,7 +102,7 @@ const LandingPage = () => {
                 The safer way to pay, <br />
                 <chakra.span color="brand.500">invest and grow.</chakra.span>
               </Heading>
-              <Text fontSize="xl" color={textColor} maxW="lg" lineHeight="tall">
+              <Text fontSize="xl" mt="2" mb="4" color={textColor} maxW="lg" lineHeight="tall">
                 Join millions of users who trust Nivesh Assist for their financial journey. Secure payments, AI-powered investments, and real-time tracking.
               </Text>
               <Stack direction={{ base: 'column', sm: 'row' }} spacing={4}>
@@ -114,6 +114,7 @@ const LandingPage = () => {
                   fontSize="md"
                   fontWeight="700"
                   _hover={{ transform: 'translateY(-2px)' }}
+                  color="white"
                 >
                   Get Started
                 </Button>
@@ -125,12 +126,14 @@ const LandingPage = () => {
                   h="14"
                   fontSize="md"
                   fontWeight="700"
+                  color="gray.600"
+                  borderColor={"gray.400"}
                 >
                   Learn More
                 </Button>
               </Stack>
             </MotionStack>
-            
+
             <MotionBox
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -148,8 +151,8 @@ const LandingPage = () => {
                 filter="blur(80px)"
                 zIndex="-1"
               />
-              <Image 
-                src="https://images.unsplash.com/photo-1556742044-3c52d6e88c62?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+              <Image
+                src="https://images.unsplash.com/photo-1556742044-3c52d6e88c62?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                 alt="Hero Image"
                 borderRadius="3xl"
                 boxShadow="2xl"
@@ -160,29 +163,29 @@ const LandingPage = () => {
       </Box>
 
       {/* 3️⃣ Trusted By Section */}
-      <Box py={16} bg="white" borderY="1px" borderColor="gray.100">
-        <Container maxW="container.xl">
-          <VStack spacing={10}>
-            <Text fontWeight="bold" color="gray.400" textTransform="uppercase" letterSpacing="widest" fontSize="xs">
-              Trusted by leading institutions worldwide
-            </Text>
-            <HStack spacing={{ base: 8, md: 16 }} wrap="wrap" justify="center" opacity="0.6" filter="grayscale(1)">
-              <Heading size="md" color="gray.600">FORBES</Heading>
-              <Heading size="md" color="gray.600">TECHCRUNCH</Heading>
-              <Heading size="md" color="gray.600">WIRED</Heading>
-              <Heading size="md" color="gray.600">BLOOMBERG</Heading>
-              <Heading size="md" color="gray.600">THE VERGE</Heading>
-            </HStack>
-          </VStack>
-        </Container>
-      </Box>
-
+      {/* <Box py={16} bg="white" borderY="1px" borderColor="gray.100"> */}
+      {/*   <Container maxW="container.xl"> */}
+      {/*     <VStack spacing={10}> */}
+      {/*       <Text fontWeight="bold" color="gray.400" textTransform="uppercase" letterSpacing="widest" fontSize="xs"> */}
+      {/*         Trusted by leading institutions worldwide */}
+      {/*       </Text> */}
+      {/*       <HStack spacing={{ base: 8, md: 16 }} wrap="wrap" justify="center" opacity="0.6" filter="grayscale(1)"> */}
+      {/*         <Heading size="md" color="gray.600">FORBES</Heading> */}
+      {/*         <Heading size="md" color="gray.600">TECHCRUNCH</Heading> */}
+      {/*         <Heading size="md" color="gray.600">WIRED</Heading> */}
+      {/*         <Heading size="md" color="gray.600">BLOOMBERG</Heading> */}
+      {/*         <Heading size="md" color="gray.600">THE VERGE</Heading> */}
+      {/*       </HStack> */}
+      {/*     </VStack> */}
+      {/*   </Container> */}
+      {/* </Box> */}
+      {/**/}
       {/* 4️⃣ Features Section */}
       <Box py={24} bg={sectionBg}>
         <Container maxW="container.xl">
           <VStack spacing={16}>
             <VStack spacing={4} textAlign="center">
-              <Heading size="2xl" fontWeight="800">Designed for your lifestyle</Heading>
+              <Heading size="2xl" fontWeight="800" color="black" >Designed for your lifestyle</Heading>
               <Text fontSize="lg" color={textColor} maxW="2xl">
                 Powerful tools that make managing your money simpler, faster, and more secure.
               </Text>
@@ -221,7 +224,7 @@ const LandingPage = () => {
                   transition={{ delay: idx * 0.1 }}
                 >
                   <Icon as={feature.icon} w={10} h={10} color="brand.500" mb={6} />
-                  <Heading size="md" mb={4}>{feature.title}</Heading>
+                  <Heading size="md" mb={4} color="black">{feature.title}</Heading>
                   <Text color={textColor} lineHeight="tall">{feature.desc}</Text>
                 </MotionBox>
               ))}
@@ -242,30 +245,30 @@ const LandingPage = () => {
               <Box p={10} bg="brand.500" borderRadius="3xl" color="white" boxShadow="2xl">
                 <VStack align="start" spacing={6}>
                   <Icon as={FiShield} w={12} h={12} />
-                  <Heading size="xl" fontWeight="800">Enterprise-grade security for everyone.</Heading>
-                  <Text fontSize="lg" opacity="0.9">
+                  <Heading size="xl" fontWeight="800" >Enterprise-grade security for everyone.</Heading>
+                  <Text fontSize="lg" opacity="0.9" color="white">
                     We use the same technology as the world's leading banks to keep your data safe.
                   </Text>
                   <VStack align="start" spacing={4}>
                     <HStack>
                       <Icon as={FiCheckCircle} />
-                      <Text fontWeight="600">256-bit AES Encryption</Text>
+                      <Text fontWeight="600" color="white">256-bit AES Encryption</Text>
                     </HStack>
                     <HStack>
                       <Icon as={FiCheckCircle} />
-                      <Text fontWeight="600">Multi-factor Authentication</Text>
+                      <Text fontWeight="600" color="white">Multi-factor Authentication</Text>
                     </HStack>
                     <HStack>
                       <Icon as={FiCheckCircle} />
-                      <Text fontWeight="600">24/7 Fraud Monitoring</Text>
+                      <Text fontWeight="600" color="white">24/7 Fraud Monitoring</Text>
                     </HStack>
                   </VStack>
                 </VStack>
               </Box>
             </MotionBox>
-            
+
             <VStack align="start" spacing={8}>
-              <Heading size="2xl" fontWeight="800">Your security is our top priority.</Heading>
+              <Heading size="2xl" fontWeight="800" color="black">Your security is our top priority.</Heading>
               <Text fontSize="lg" color={textColor} lineHeight="tall">
                 We're committed to protecting your money and your data. From the moment you sign up, our advanced security systems are working to keep you safe.
               </Text>
@@ -290,11 +293,11 @@ const LandingPage = () => {
             viewport={{ once: true }}
           >
             <VStack spacing={8}>
-              <Heading size="2xl" fontWeight="800">Ready to transform your finances?</Heading>
+              <Heading size="2xl" fontWeight="800" color="gray.800">Ready to transform your finances?</Heading>
               <Text fontSize="xl" color={textColor} maxW="2xl">
                 Join over 400 million users worldwide who trust Nivesh Assist for their daily financial needs.
               </Text>
-              <Button colorScheme="brand" size="lg" px={12} h="16" borderRadius="full" fontSize="lg" fontWeight="800">
+              <Button colorScheme="brand" color="white" size="lg" px={12} h="16" borderRadius="full" fontSize="lg" fontWeight="800">
                 Create your free account
               </Button>
             </VStack>
@@ -313,19 +316,19 @@ const LandingPage = () => {
               </Text>
             </Stack>
             <Stack spacing={4}>
-              <Text fontWeight="700" fontSize="sm">Products</Text>
+              <Text fontWeight="700" fontSize="sm" color="gray.500">Products</Text>
               <Link fontSize="sm" color={textColor}>Personal</Link>
               <Link fontSize="sm" color={textColor}>Business</Link>
               <Link fontSize="sm" color={textColor}>Investments</Link>
             </Stack>
             <Stack spacing={4}>
-              <Text fontWeight="700" fontSize="sm">Company</Text>
+              <Text fontWeight="700" fontSize="sm" color="gray.500">Company</Text>
               <Link fontSize="sm" color={textColor}>About Us</Link>
               <Link fontSize="sm" color={textColor}>Careers</Link>
               <Link fontSize="sm" color={textColor}>Press</Link>
             </Stack>
             <Stack spacing={4}>
-              <Text fontWeight="700" fontSize="sm">Legal</Text>
+              <Text fontWeight="700" fontSize="sm" color="gray.500">Legal</Text>
               <Link fontSize="sm" color={textColor}>Privacy</Link>
               <Link fontSize="sm" color={textColor}>Terms</Link>
               <Link fontSize="sm" color={textColor}>Security</Link>

@@ -87,6 +87,11 @@ const theme = extendTheme({
         variant: 'outline',
       },
     },
+    Text: {
+      baseStyle: {
+        color: 'black',
+      }
+    }
   },
   styles: {
     global: (props) => ({
