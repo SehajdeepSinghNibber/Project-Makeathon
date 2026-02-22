@@ -182,18 +182,6 @@ const LandingPage = () => {
                   Get Started
                 </Button>
                 </Link>
-                <Button
-                  variant="outline"
-                  colorScheme="brand"
-                  size="lg"
-                  px={10}
-                  h="14"
-                  fontSize="md"
-                  fontWeight="700"
-                  color={"brand.500"}
-                >
-                  Learn More
-                </Button>
               </Stack>
             </MotionStack>
 
