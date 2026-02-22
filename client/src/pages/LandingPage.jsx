@@ -32,6 +32,9 @@ import {
   FiUser,
 } from "react-icons/fi";
 
+
+import hero_image from "../public/hero_image.jpg";
+
 const MotionBox = chakra(motion.div, {
   shouldForwardProp: (prop) =>
     isValidMotionProp(prop) || shouldForwardProp(prop),
@@ -212,7 +215,7 @@ const LandingPage = () => {
                 zIndex="-1"
               />
               <Image
-                src="https://media.licdn.com/dms/image/v2/D4E10AQEncOKdMnN7Og/image-shrink_1280/B4EZoQ4xOxKYAM-/0/1761219909859?e=2147483647&v=beta&t=Hcrudz6ZnGG1gO_DiKse_fAiKLgRXd4z8nXtkp1eAyk"
+                src={hero_image}
                 alt="Hero Image"
                 borderRadius="3xl"
               />
