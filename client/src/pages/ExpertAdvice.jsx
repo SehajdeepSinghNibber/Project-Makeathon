@@ -48,8 +48,6 @@ const ExpertAdvice = () => {
       name: "Rajesh Kumar",
       specialization: "Equity Funds",
       experience: "12+ years",
-      email: "rajesh.kumar@niveshassist.com",
-      phone: "+91 98765 43210",
       availability: "Mon–Fri, 10 AM – 5 PM",
     },
     {
@@ -57,8 +55,6 @@ const ExpertAdvice = () => {
       name: "Priya Sharma",
       specialization: "Debt & Fixed Income",
       experience: "10+ years",
-      email: "priya.sharma@niveshassist.com",
-      phone: "+91 98765 43211",
       availability: "Tue–Thu, 2 PM – 6 PM",
     },
     {
@@ -66,8 +62,6 @@ const ExpertAdvice = () => {
       name: "Amit Patel",
       specialization: "Hybrid Funds",
       experience: "8+ years",
-      email: "amit.patel@niveshassist.com",
-      phone: "+91 98765 43212",
       availability: "Mon–Wed–Fri, 9 AM – 4 PM",
     },
     {
@@ -75,8 +69,6 @@ const ExpertAdvice = () => {
       name: "Deepika Singh",
       specialization: "Sector Focused Funds",
       experience: "9+ years",
-      email: "deepika.singh@niveshassist.com",
-      phone: "+91 98765 43213",
       availability: "Mon–Sat, 11 AM – 7 PM",
     },
     {
@@ -84,17 +76,13 @@ const ExpertAdvice = () => {
       name: "Vikram Desai",
       specialization: "International Funds",
       experience: "11+ years",
-      email: "vikram.desai@niveshassist.com",
-      phone: "+91 98765 43214",
       availability: "Daily, 8 AM – 8 PM",
     },
     {
       id: 6,
-      name: "Neha Gupta",
-      specialization: "Retirement Planning",
+      name: "Anirudh Gupta",
+      specialization: "Scheme Oriented Funds",
       experience: "7+ years",
-      email: "neha.gupta@niveshassist.com",
-      phone: "+91 98765 43215",
       availability: "Tue–Sat, 10 AM – 6 PM",
     },
     {
@@ -102,8 +90,6 @@ const ExpertAdvice = () => {
       name: "Sanjay Verma",
       specialization: "Growth Funds",
       experience: "13+ years",
-      email: "sanjay.verma@niveshassist.com",
-      phone: "+91 98765 43216",
       availability: "Mon–Fri, 9 AM – 3 PM",
     },
     {
@@ -111,8 +97,6 @@ const ExpertAdvice = () => {
       name: "Ananya Chatterjee",
       specialization: "Tax Planning",
       experience: "9+ years",
-      email: "ananya.chatterjee@niveshassist.com",
-      phone: "+91 98765 43217",
       availability: "Wed–Sun, 2 PM – 8 PM",
     },
     {
@@ -120,8 +104,6 @@ const ExpertAdvice = () => {
       name: "Rohan Khanna",
       specialization: "Emerging Market Funds",
       experience: "10+ years",
-      email: "rohan.khanna@niveshassist.com",
-      phone: "+91 98765 43218",
       availability: "Mon–Thu, 11 AM – 5 PM",
     },
     {
@@ -129,8 +111,6 @@ const ExpertAdvice = () => {
       name: "Shreya Mishra",
       specialization: "Balanced Portfolio",
       experience: "8+ years",
-      email: "shreya.mishra@niveshassist.com",
-      phone: "+91 98765 43219",
       availability: "Tue–Fri–Sun, 10 AM – 7 PM",
     },
   ];
@@ -237,16 +217,6 @@ const ExpertAdvice = () => {
                 <Badge width="fit-content">{c.specialization}</Badge>
 
                 <Divider />
-
-                <HStack>
-                  <Icon as={FaEnvelope} />
-                  <Text fontSize="sm">{c.email}</Text>
-                </HStack>
-
-                <HStack>
-                  <Icon as={FaPhone} />
-                  <Text fontSize="sm">{c.phone}</Text>
-                </HStack>
 
                 <HStack>
                   <Icon as={FaCalendar} />
