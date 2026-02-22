@@ -32,6 +32,7 @@ router.post("/insights", async (req, res) => {
         userType: "new",
         answers: req.body.answers || {}
       });
+      console.log("Generated insights for new user:", insights);
       res.json(insights);
     } else if (userType === "existing") {
       // Existing investor: Get portfolio and detailed analysis
@@ -57,7 +58,7 @@ router.post("/insights", async (req, res) => {
         portfolioData,
         analysisData
       });
-
+      console.log("Generated insights for existing user:", insights);
       res.json(insights);
     } else {
       return res.status(400).json({ message: "Invalid userType" });

@@ -187,6 +187,23 @@ const ExistingUserInsights = ({ insights }) => (
       </CardBody>
     </Card>
 
+    {/* Diversification Snapshot */}
+    {insights.diversificationScoreDetail && (
+      <Card>
+        <CardBody p={8}>
+          <Heading size="md" mb={6}>Diversification Scorecard</Heading>
+          <SimpleGrid columns={{ base: 1, md: 5 }} gap={4}>
+            <StatCard label="Overall Score" value={`${insights.diversificationScoreDetail.overall}/100`} color="green" />
+            <StatCard label="Level" value={insights.diversificationScoreDetail.level} color="blue" />
+            <StatCard label="Sector Diversity" value={insights.diversificationScoreDetail.sectorDiversity} color="purple" />
+            <StatCard label="Share Diversity" value={insights.diversificationScoreDetail.shareDiversity} color="orange" />
+            <StatCard label="Concentration" value={insights.diversificationScoreDetail.concentrationScore} color="red" />
+          </SimpleGrid>
+          <Text mt={6} fontSize="sm" color="gray.600">{insights.diversificationAssessment}</Text>
+        </CardBody>
+      </Card>
+    )}
+
     {/* Risk Warnings */}
     {insights.riskWarnings && insights.riskWarnings.length > 0 && (
       <Card borderLeftWidth={4} borderLeftColor="red.500">
@@ -200,6 +217,95 @@ const ExistingUserInsights = ({ insights }) => (
               </Box>
             ))}
           </VStack>
+        </CardBody>
+      </Card>
+    )}
+
+    {/* Overlapping Holdings */}
+    {insights.overlappingHoldings && (
+      <Card>
+        <CardBody p={8}>
+          <Heading size="md" mb={4}>Holding Overlap</Heading>
+          <Text mb={6} color="gray.700">{insights.overlappingHoldings}</Text>
+          {insights.overlappingSharesDetail && insights.overlappingSharesDetail.length > 0 && (
+            <Box overflowX="auto">
+              <Table size="sm" variant="simple">
+                <Thead>
+                  <Tr>
+                    <Th>Company</Th>
+                    <Th isNumeric>Funds</Th>
+                    <Th isNumeric>Exposure</Th>
+                    <Th>Impacted Funds</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {insights.overlappingSharesDetail.map((holding, idx) => (
+                    <Tr key={idx}>
+                      <Td fontWeight="600">{holding.company}</Td>
+                      <Td isNumeric>{holding.numberOfFunds}</Td>
+                      <Td isNumeric>
+                        {typeof holding.totalExposurePercent === "number"
+                          ? `${holding.totalExposurePercent.toFixed(2)}%`
+                          : holding.totalExposurePercent}
+                      </Td>
+                      <Td maxW="280px" whiteSpace="normal">
+                        <Text fontSize="xs" color="gray.600">
+                          {Array.isArray(holding.funds) ? holding.funds.join(", ") : "—"}
+                        </Text>
+                      </Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </Box>
+          )}
+        </CardBody>
+      </Card>
+    )}
+
+    {/* Sector Congestion */}
+    {insights.sectorCongestion && (
+      <Card>
+        <CardBody p={8}>
+          <Heading size="md" mb={4}>Sector Congestion</Heading>
+          <Text mb={6} color="gray.700">{insights.sectorCongestion}</Text>
+          {insights.overlappingSectorsDetail && insights.overlappingSectorsDetail.length > 0 && (
+            <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
+              {insights.overlappingSectorsDetail.map((sector, idx) => (
+                <Box key={idx} p={4} border="1px" borderColor="gray.100" borderRadius="lg" bg="gray.50">
+                  <Heading size="sm" mb={2}>{sector.sector}</Heading>
+                  <Text fontSize="xs" color="gray.600">{sector.numberOfFunds} funds | {typeof sector.totalExposurePercent === "number" ? `${sector.totalExposurePercent.toFixed(2)}%` : sector.totalExposurePercent} exposure</Text>
+                  <Text fontSize="xs" color="gray.500" mt={2}>
+                    {Array.isArray(sector.funds) ? sector.funds.join(", ") : "—"}
+                  </Text>
+                </Box>
+              ))}
+            </SimpleGrid>
+          )}
+        </CardBody>
+      </Card>
+    )}
+
+    {/* Potential Sectors */}
+    {insights.potentialSectors && insights.potentialSectors.length > 0 && (
+      <Card borderLeftWidth={4} borderLeftColor="green.500">
+        <CardBody p={8}>
+          <Heading size="md" mb={6}>Underrepresented Opportunities</Heading>
+          <SimpleGrid columns={{ base: 1, md: 3 }} gap={4}>
+            {insights.potentialSectors.map((sector, idx) => (
+              <Box key={idx} p={4} borderRadius="xl" bg="green.50" border="1px" borderColor="green.100">
+                <Heading size="sm" color="green.900" mb={2}>{sector.sector}</Heading>
+                <Text fontSize="xs" color="green.700" mb={2}>{sector.reason}</Text>
+                {sector.expectedCharacteristics && sector.expectedCharacteristics.length > 0 && (
+                  <VStack align="start" spacing={1}>
+                    {sector.expectedCharacteristics.map((trait, traitIdx) => (
+                      <Text key={traitIdx} fontSize="xs" color="gray.700">• {trait}</Text>
+                    ))}
+                  </VStack>
+                )}
+              </Box>
+            ))}
+          </SimpleGrid>
         </CardBody>
       </Card>
     )}
@@ -222,6 +328,16 @@ const ExistingUserInsights = ({ insights }) => (
               ))}
             </SimpleGrid>
           )}
+        </CardBody>
+      </Card>
+    )}
+
+    {/* Risk Alignment */}
+    {insights.riskAlignment && (
+      <Card>
+        <CardBody p={8}>
+          <Heading size="md" mb={4}>Risk Alignment Check</Heading>
+          <Text color="gray.700">{insights.riskAlignment}</Text>
         </CardBody>
       </Card>
     )}
