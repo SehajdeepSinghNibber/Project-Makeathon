@@ -306,7 +306,7 @@ const Dashboard = () => {
   return (
     <VStack spacing={8} align="stretch" pb={10}>
       {/* 4 Stats Cards */}
-      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={6}>
         <StatCard
           label="Total Investment"
           value={`₹${totalInvestment.toLocaleString()}`}
