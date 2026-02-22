@@ -127,7 +127,7 @@ CRITICAL INSTRUCTIONS:
 - No future return predictions
 - Educational, retail-investor friendly tone
 
-Return ONLY valid JSON in this exact format:
+Return ONLY valid JSON in this exact to exact format (which means all fields must be present, but can be "N/A" or "No significant issues" if not applicable):
 {
   "portfolioHealth": "assessment of overall portfolio health with specific reference to overlaps",
   "overlappingHoldings": "detailed explanation of which shares appear in multiple funds and impact",
