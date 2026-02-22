@@ -5,6 +5,7 @@ import authRoutes from "./routes/auth.js";
 import fundRoutes from "./routes/funds.js";
 import portfolioRoutes from "./routes/portfolio.js";
 import aiRoutes from "./routes/ai.js";
+import compareRoutes from "./routes/compare.js";
 import ConnectDB from "./database.mjs";
 
 dotenv.config();
@@ -30,6 +31,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/funds", fundRoutes);
 app.use("/api/portfolio", portfolioRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api/compare", compareRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "OK", message: "FundLens API is running" });

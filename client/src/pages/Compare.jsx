@@ -1,63 +1,120 @@
-import React, { useState, useEffect,useMemo } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
+  Alert,
+  AlertIcon,
+  Badge,
   Box,
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
   Container,
-  VStack,
-  HStack,
+  Flex,
   Heading,
-  Text,
+  HStack,
+  Icon,
+  IconButton,
   Input,
   InputGroup,
   InputLeftElement,
   InputRightElement,
-  Button,
-  Card,
-  CardBody,
-  Badge,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  IconButton,
-  Flex,
-  useColorModeValue,
-  Tag,
-  TagLabel,
-  TagCloseButton,
-  Tooltip,
   SimpleGrid,
-  Icon,
   Spinner,
-} from '@chakra-ui/react';
-import { FiPlus, FiTrash2, FiInfo, FiBarChart2, FiArrowRight, FiCheckCircle, FiChevronDown, FiChevronUp } from 'react-icons/fi';
-import { SearchIcon } from '@chakra-ui/icons';
-
-const DEFAULT_METRICS = {
-  "Large Cap": { risk: "Very High", returns_1y: 28.5, returns_3y: 17.2, returns_5y: 15.4, expense_ratio: 0.95, rating: 4, min_investment: 500 },
-  "Mid Cap": { risk: "Very High", returns_1y: 38.2, returns_3y: 22.4, returns_5y: 19.8, expense_ratio: 0.75, rating: 4, min_investment: 500 },
-  "Hybrid": { risk: "High", returns_1y: 22.4, returns_3y: 14.2, returns_5y: 13.1, expense_ratio: 1.10, rating: 3, min_investment: 100 },
-  "Pharma": { risk: "Very High", returns_1y: 35.1, returns_3y: 16.5, returns_5y: 18.2, expense_ratio: 0.85, rating: 4, min_investment: 500 },
-  "Banking": { risk: "Very High", returns_1y: 24.8, returns_3y: 12.4, returns_5y: 11.2, expense_ratio: 0.98, rating: 3, min_investment: 500 }
-};
+  Table,
+  Tag,
+  TagCloseButton,
+  TagLabel,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tooltip,
+  Tr,
+  VStack,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import {
+  FiArrowRight,
+  FiBarChart2,
+  FiCheckCircle,
+  FiChevronDown,
+  FiChevronUp,
+  FiInfo,
+  FiPlus,
+  FiTrash2,
+} from "react-icons/fi";
+import { SearchIcon } from "@chakra-ui/icons";
+import api from "../services/api";
 
 const METRICS = [
-  { key: 'category', label: 'Category' },
-  { key: 'risk', label: 'Risk Level' },
-  { key: 'nav', label: 'NAV (₹)', isNumeric: true },
-  { key: 'returns_1y', label: '1Y Return (%)', isNumeric: true, highlightBest: 'highest' },
-  { key: 'returns_3y', label: '3Y Return (%)', isNumeric: true, highlightBest: 'highest' },
-  { key: 'returns_5y', label: '5Y Return (%)', isNumeric: true, highlightBest: 'highest' },
-  { key: 'expense_ratio', label: 'Expense Ratio (%)', isNumeric: true, highlightBest: 'lowest' },
-  { key: 'aum', label: 'AUM' },
-  { key: 'fund_manager', label: 'Fund Manager' },
-  { key: 'min_investment', label: 'Min Investment (₹)', isNumeric: true },
+  { key: "category", label: "Category" },
+  { key: "benchmark", label: "Benchmark" },
+  { key: "nav", label: "NAV (₹)", type: "currency", isNumeric: true },
+  { key: "equity_percentage", label: "Equity Allocation (%)", suffix: "%", isNumeric: true, highlightBest: "highest" },
+  { key: "debt_percentage", label: "Debt Allocation (%)", suffix: "%", isNumeric: true, highlightBest: "lowest" },
+  { key: "return_1y_regular", label: "1Y Return (%)", suffix: "%", isNumeric: true, highlightBest: "highest" },
+  { key: "return_1y_benchmark", label: "1Y Benchmark (%)", suffix: "%", isNumeric: true },
+  { key: "information_ratio_1y", label: "Information Ratio (1Y)", isNumeric: true, highlightBest: "highest" },
+  { key: "return_3y_regular", label: "3Y Return (%)", suffix: "%", isNumeric: true, highlightBest: "highest" },
+  { key: "return_3y_benchmark", label: "3Y Benchmark (%)", suffix: "%", isNumeric: true },
+  { key: "information_ratio_3y", label: "Information Ratio (3Y)", isNumeric: true, highlightBest: "highest" },
+  { key: "return_5y_regular", label: "5Y Return (%)", suffix: "%", isNumeric: true, highlightBest: "highest" },
+  { key: "return_5y_benchmark", label: "5Y Benchmark (%)", suffix: "%", isNumeric: true },
+  { key: "information_ratio_5y", label: "Information Ratio (5Y)", isNumeric: true, highlightBest: "highest" },
+  { key: "return_10y_regular", label: "10Y Return (%)", suffix: "%", isNumeric: true, highlightBest: "highest" },
+  { key: "return_10y_benchmark", label: "10Y Benchmark (%)", suffix: "%", isNumeric: true },
+  { key: "information_ratio_10y", label: "Information Ratio (10Y)", isNumeric: true, highlightBest: "highest" },
+  { key: "return_since_launch_regular", label: "Since Launch Return (%)", suffix: "%", isNumeric: true, highlightBest: "highest" },
+  { key: "return_since_launch_benchmark", label: "Since Launch Benchmark (%)", suffix: "%", isNumeric: true },
+  { key: "riskometer_scheme", label: "Scheme Risk" },
+  { key: "riskometer_benchmark", label: "Benchmark Risk" },
+  { key: "aum", label: "AUM (₹ Cr)" },
 ];
 
-/* ============================
-   INNER COMPONENTS
-   ============================ */
+const sanitizeNumber = (value) => {
+  if (value === null || value === undefined || value === "") return null;
+  if (typeof value === "number") return value;
+  const parsed = parseFloat(value);
+  return Number.isNaN(parsed) ? null : parsed;
+};
+
+const formatMetricValue = (value, metric) => {
+  if (value === null || value === undefined || value === "") return "—";
+
+  if (metric?.type === "currency") {
+    const num = sanitizeNumber(value);
+    if (num !== null) {
+      return `₹${num.toLocaleString("en-IN", { maximumFractionDigits: 2 })}`;
+    }
+  }
+
+  if (metric?.suffix === "%") {
+    const num = sanitizeNumber(value);
+    if (num !== null) {
+      return `${num.toFixed(2)}%`;
+    }
+  }
+
+  if (typeof value === "number") {
+    return Number.isInteger(value) ? value : value.toFixed(4);
+  }
+
+  return value;
+};
+
+const formatRawLabel = (key) =>
+  key
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+
+const formatRawValue = (value) => {
+  if (value === null || value === undefined || value === "") return "—";
+  if (typeof value === "number") {
+    return Number.isInteger(value) ? value : value.toFixed(4);
+  }
+  return value;
+};
 
 const EmptyState = ({ onSelect }) => (
   <Card variant="outline" borderStyle="dashed" py={20} textAlign="center" borderRadius="3xl">
@@ -86,39 +143,54 @@ const EmptyState = ({ onSelect }) => (
   </Card>
 );
 
-const CompareSelector = ({ selectedFunds, onAdd, onRemove, availableFunds }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+const CompareSelector = ({ selectedSchemes, onAdd, onRemove, availableFunds }) => {
+  const [searchTerm, setSearchTerm] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuRef = React.useRef(null);
+  const menuRef = useRef(null);
 
-  // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setIsMenuOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const filteredFunds = useMemo(() => {
-    const unselected = availableFunds.filter(f => 
-      !selectedFunds.find(sf => sf.fund_name === f.fund_name)
+    const unselected = availableFunds.filter(
+      (fund) => !selectedSchemes.includes(fund.scheme_name)
     );
-    
-    if (!searchTerm) return unselected.slice(0, 10);
-    
-    return unselected.filter(f => 
-      f.fund_name.toLowerCase().includes(searchTerm.toLowerCase())
-    ).slice(0, 20);
-  }, [availableFunds, searchTerm, selectedFunds]);
+
+    if (!searchTerm) {
+      return unselected;
+    }
+
+    return unselected.filter((fund) =>
+      fund.scheme_name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [availableFunds, searchTerm, selectedSchemes]);
+
+  const selectedMeta = useMemo(
+    () =>
+      selectedSchemes.map(
+        (name) =>
+          availableFunds.find((fund) => fund.scheme_name === name) || {
+            scheme_name: name,
+            category: "—",
+          }
+      ),
+    [selectedSchemes, availableFunds]
+  );
 
   return (
     <Box position="relative" w="full" ref={menuRef}>
       <VStack align="stretch" spacing={4}>
         <Box>
-          <Text mb={2} fontSize="sm" fontWeight="bold" color="gray.600">Select Funds to Compare ({selectedFunds.length}/5)</Text>
+          <Text mb={2} fontSize="sm" fontWeight="bold" color="gray.600">
+            Select Funds to Compare ({selectedSchemes.length}/5)
+          </Text>
           <InputGroup size="lg">
             <InputLeftElement pointerEvents="none">
               <SearchIcon color="gray.400" />
@@ -162,53 +234,57 @@ const CompareSelector = ({ selectedFunds, onAdd, onRemove, availableFunds }) => 
               overflowY="auto"
               border="1px"
               borderColor="gray.100"
-              animation="fadeIn 0.2s ease-in-out"
             >
               <Box p={2} bg="gray.50" borderBottom="1px" borderColor="gray.100">
                 <Text fontSize="xs" fontWeight="bold" color="gray.400" px={2}>
-                  {searchTerm ? `Search Results (${filteredFunds.length})` : 'Popular Funds'}
+                  {searchTerm ? `Search Results (${filteredFunds.length})` : "Popular Funds"}
                 </Text>
               </Box>
               {filteredFunds.length > 0 ? (
-                filteredFunds.map(fund => (
+                filteredFunds.map((fund) => (
                   <Box
-                    key={fund.fund_name}
+                    key={fund.scheme_name}
                     px={4}
                     py={3}
                     cursor="pointer"
-                    _hover={{ bg: 'brand.50' }}
+                    _hover={{ bg: "brand.50" }}
                     onClick={() => {
                       onAdd(fund);
-                      setSearchTerm('');
+                      setSearchTerm("");
                       setIsMenuOpen(false);
                     }}
-                    transition="background 0.2s"
                   >
                     <HStack justify="space-between">
                       <VStack align="start" spacing={0}>
-                        <Text fontWeight="bold" fontSize="sm" color="gray.700">{fund.fund_name}</Text>
+                        <Text fontWeight="bold" fontSize="sm" color="gray.700">
+                          {fund.scheme_name}
+                        </Text>
                         <Text fontSize="xs" color="gray.500">{fund.category}</Text>
                       </VStack>
-                      <Badge colorScheme="brand" variant="subtle" borderRadius="md">
-                        {fund.returns_3y.toFixed(1)}% 3Y
-                      </Badge>
+                      {typeof fund.return_3y_regular === "number" && (
+                        <Badge colorScheme="brand" variant="subtle" borderRadius="md">
+                          {fund.return_3y_regular.toFixed(1)}% 3Y
+                        </Badge>
+                      )}
                     </HStack>
                   </Box>
                 ))
               ) : (
                 <Box px={4} py={3}>
-                  <Text fontSize="sm" color="gray.500">No available funds found</Text>
+                  <Text fontSize="sm" color="gray.500">
+                    No available funds found
+                  </Text>
                 </Box>
               )}
             </Box>
           )}
         </Box>
 
-        {selectedFunds.length > 0 && (
+        {selectedMeta.length > 0 && (
           <HStack wrap="wrap" spacing={3}>
-            {selectedFunds.map(fund => (
+            {selectedMeta.map((fund) => (
               <Tag
-                key={fund.fund_name}
+                key={fund.scheme_name}
                 size="lg"
                 borderRadius="full"
                 variant="subtle"
@@ -216,8 +292,8 @@ const CompareSelector = ({ selectedFunds, onAdd, onRemove, availableFunds }) => 
                 px={4}
                 py={2}
               >
-                <TagLabel fontWeight="bold">{fund.fund_name}</TagLabel>
-                <TagCloseButton onClick={() => onRemove(fund)} />
+                <TagLabel fontWeight="bold">{fund.scheme_name}</TagLabel>
+                <TagCloseButton onClick={() => onRemove(fund.scheme_name)} />
               </Tag>
             ))}
           </HStack>
@@ -228,28 +304,41 @@ const CompareSelector = ({ selectedFunds, onAdd, onRemove, availableFunds }) => 
 };
 
 const CompareTable = ({ selectedFunds, onRemove }) => {
-  const borderColor = useColorModeValue('gray.100', 'gray.700');
-  const stickyBg = useColorModeValue('white', 'gray.800');
+  const borderColor = useColorModeValue("gray.100", "gray.700");
+  const stickyBg = useColorModeValue("white", "gray.800");
 
   const findBestValue = (key, type) => {
     if (selectedFunds.length < 2 || !type) return null;
-    const values = selectedFunds.map(f => f[key]).filter(v => typeof v === 'number');
+    const values = selectedFunds
+      .map((fund) => sanitizeNumber(fund[key]))
+      .filter((value) => value !== null);
     if (values.length === 0) return null;
-    if (type === 'highest') return Math.max(...values);
-    if (type === 'lowest') return Math.min(...values);
+    if (type === "highest") return Math.max(...values);
+    if (type === "lowest") return Math.min(...values);
     return null;
   };
 
   return (
     <Box overflowX="auto" pb={4}>
-      <Table variant="simple" sx={{ borderCollapse: 'separate', borderSpacing: '0 8px' }}>
+      <Table variant="simple" sx={{ borderCollapse: "separate", borderSpacing: "0 8px" }}>
         <Thead>
           <Tr>
-            <Th width="250px" position="sticky" left={0} bg={stickyBg} zIndex={10} borderBottom="none" textTransform="none" fontSize="md" backgroundColor="white" color="black">
+            <Th
+              width="250px"
+              position="sticky"
+              left={0}
+              bg={stickyBg}
+              zIndex={10}
+              borderBottom="none"
+              textTransform="none"
+              fontSize="md"
+              backgroundColor="white"
+              color="black"
+            >
               Key Metrics
             </Th>
-            {selectedFunds.map(fund => (
-              <Th key={fund.fund_name} minW="280px" borderBottom="none" textAlign="center">
+            {selectedFunds.map((fund) => (
+              <Th key={fund.scheme_name} minW="280px" borderBottom="none" textAlign="center">
                 <VStack spacing={3} p={4} bg="brand.50" borderRadius="2xl" position="relative">
                   <IconButton
                     icon={<FiTrash2 />}
@@ -259,12 +348,16 @@ const CompareTable = ({ selectedFunds, onRemove }) => {
                     position="absolute"
                     top={2}
                     right={2}
-                    onClick={() => onRemove(fund)}
+                    onClick={() => onRemove(fund.scheme_name)}
                     aria-label="Remove fund"
-                    _hover={{ bg: 'red.100' }}
+                    _hover={{ bg: "red.100" }}
                   />
-                  <Heading size="xs" textAlign="center" lineHeight="shorter" noOfLines={2} px={4}>{fund.fund_name}</Heading>
-                  <Badge colorScheme="brand" variant="solid" borderRadius="full" px={3} >{fund.category}</Badge>
+                  <Heading size="xs" textAlign="center" lineHeight="shorter" noOfLines={2} px={4}>
+                    {fund.scheme_name}
+                  </Heading>
+                  <Badge colorScheme="brand" variant="solid" borderRadius="full" px={3}>
+                    {fund.category}
+                  </Badge>
                 </VStack>
               </Th>
             ))}
@@ -275,26 +368,41 @@ const CompareTable = ({ selectedFunds, onRemove }) => {
             const bestValue = findBestValue(metric.key, metric.highlightBest);
             return (
               <Tr key={metric.key}>
-                <Td position="sticky" left={0} bg={stickyBg} zIndex={10} fontWeight="bold" color="gray.600" borderBottom="1px" borderColor={borderColor} backgroundColor="white" color="black">
+                <Td
+                  position="sticky"
+                  left={0}
+                  bg={stickyBg}
+                  zIndex={10}
+                  fontWeight="bold"
+                  color="gray.600"
+                  borderBottom="1px"
+                  borderColor={borderColor}
+                  backgroundColor="white"
+                >
                   {metric.label}
                 </Td>
-                {selectedFunds.map(fund => {
+                {selectedFunds.map((fund) => {
                   const value = fund[metric.key];
-                  const isBest = bestValue !== null && value === bestValue;
+                  const numericValue = sanitizeNumber(value);
+                  const isBest =
+                    bestValue !== null &&
+                    numericValue !== null &&
+                    numericValue === bestValue;
                   return (
-                    <Td key={fund.fund_name} textAlign="center" borderBottom="1px" borderColor={borderColor}>
+                    <Td key={fund.scheme_name} textAlign="center" borderBottom="1px" borderColor={borderColor}>
                       <HStack justify="center" spacing={2}>
-                        <Text fontWeight={isBest ? "bold" : "medium"} color={isBest ? "brand.600" : "gray.800"} fontSize="sm">
-                          {typeof value === 'number' ? 
-                            (metric.key === 'nav' || metric.key === 'min_investment' ? 
-                              `₹${value.toLocaleString('en-IN')}` : 
-                              `${value.toFixed(2)}${metric.key.includes('returns') || metric.key === 'expense_ratio' ? '%' : ''}`
-                            ) : value
-                          }
+                        <Text
+                          fontWeight={isBest ? "bold" : "medium"}
+                          color={isBest ? "brand.600" : "gray.800"}
+                          fontSize="sm"
+                        >
+                          {formatMetricValue(value, metric)}
                         </Text>
                         {isBest && (
                           <Tooltip label={`Best in ${metric.label}`}>
-                            <Box color="green.500"><FiCheckCircle size={14} /></Box>
+                            <Box color="green.500">
+                              <FiCheckCircle size={14} />
+                            </Box>
                           </Tooltip>
                         )}
                       </HStack>
@@ -304,115 +412,135 @@ const CompareTable = ({ selectedFunds, onRemove }) => {
               </Tr>
             );
           })}
-          <Tr>
-            <Td position="sticky" left={0} bg={stickyBg} zIndex={10} fontWeight="bold" color="gray.600" borderBottom="none" verticalAlign="top" pt={6} backgroundColor="white" color="black">Top Holdings</Td>
-            {selectedFunds.map(fund => (
-              <Td key={fund.fund_name} borderBottom="none" verticalAlign="top" pt={6}>
-                <VStack align="center" spacing={2}>
-                  {fund.top_holdings?.slice(0, 5).map((holding, i) => (
-                    <Tooltip key={i} label={`${holding.sector} - ${holding.allocation_percent}%`}>
-                      <Text fontSize="xs" color="gray.500" bg="gray.50" px={3} py={1} borderRadius="full" w="full" textAlign="center" border="1px" borderColor="gray.100" cursor="help">
-                        {typeof holding === 'string' ? holding : holding.company_name}
-                      </Text>
-                    </Tooltip>
-                  ))}
-                </VStack>
-              </Td>
-            ))}
-          </Tr>
         </Tbody>
       </Table>
     </Box>
   );
 };
 
+const FullFundDetails = ({ funds }) => {
+  if (!funds.length) return null;
+
+  return (
+    <Card borderRadius="2xl" boxShadow="sm" variant="outline">
+      <CardHeader pb={0}>
+        <Heading size="md">Complete Fund Data</Heading>
+        <Text color="gray.500" fontSize="sm" fontWeight="medium">
+          Every field sourced from the AMC disclosure file
+        </Text>
+      </CardHeader>
+      <CardBody>
+        <SimpleGrid columns={{ base: 1, lg: Math.min(2, funds.length) }} spacing={6}>
+          {funds.map((fund) => (
+            <Box key={fund.scheme_name} border="1px" borderColor="gray.100" borderRadius="xl" p={5} bg="white">
+              <Heading size="sm" mb={3} color="gray.800">
+                {fund.scheme_name}
+              </Heading>
+              <VStack align="stretch" spacing={2}>
+                {Object.entries(fund)
+                  .sort(([a], [b]) => a.localeCompare(b))
+                  .map(([key, value]) => (
+                    <HStack key={key} justify="space-between" align="baseline">
+                      <Text fontSize="xs" fontWeight="bold" color="gray.500">
+                        {formatRawLabel(key)}
+                      </Text>
+                      <Text fontSize="sm" color="gray.800" maxW="60%" textAlign="right">
+                        {formatRawValue(value)}
+                      </Text>
+                    </HStack>
+                  ))}
+              </VStack>
+            </Box>
+          ))}
+        </SimpleGrid>
+      </CardBody>
+    </Card>
+  );
+};
+
 const ComparePage = () => {
+  const [availableFunds, setAvailableFunds] = useState([]);
+  const [selectedSchemes, setSelectedSchemes] = useState([]);
   const [selectedFunds, setSelectedFunds] = useState([]);
-  const [rawFunds, setRawFunds] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [listLoading, setListLoading] = useState(true);
+  const [compareLoading, setCompareLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchFunds = async () => {
+    const fetchFundList = async () => {
       try {
-        const response = await fetch('/distribution.json');
-        const text = await response.text();
-        
-        // Parse multi-block JSON: { "funds": [...] } { "funds": [...] }
-        const blocks = text.split(/}\s*\n\s*{/).map((block, idx) => {
-          let cleaned = block.trim();
-          if (!cleaned.startsWith('{')) cleaned = '{' + cleaned;
-          if (!cleaned.endsWith('}')) cleaned = cleaned + '}';
-          try {
-            return JSON.parse(cleaned);
-          } catch (e) {
-            console.error('Error parsing JSON block at index', idx, e);
-            return null;
-          }
-        }).filter(Boolean);
-
-        const merged = blocks.flatMap(b => b.funds || b.allFunds || (Array.isArray(b) ? b : []));
-        setRawFunds(merged);
+        const { data } = await api.get("/compare/list");
+        setAvailableFunds(data.funds || []);
+        setError("");
       } catch (err) {
-        console.error('Failed to load distribution.json:', err);
+        console.error("Failed to load fund list:", err);
+        setError("Unable to load the fund list. Please refresh the page.");
       } finally {
-        setLoading(false);
+        setListLoading(false);
       }
     };
-    fetchFunds();
+
+    fetchFundList();
   }, []);
 
-  // Memoize enriched funds to handle distribution.json format variations
-  const availableFunds = useMemo(() => {
-    if (!rawFunds.length) return [];
-    
-    const enriched = rawFunds.map((fund, idx) => {
-      let category = "Large Cap";
-      const fundName = fund.fund_name.toLowerCase();
-      if (fundName.includes('midcap') || fundName.includes('emerging')) category = "Mid Cap";
-      else if (fundName.includes('balanced') || fundName.includes('hybrid')) category = "Hybrid";
-      else if (fundName.includes('pharma')) category = "Pharma";
-      else if (fundName.includes('banking')) category = "Banking";
+  useEffect(() => {
+    if (!selectedSchemes.length) {
+      setSelectedFunds([]);
+      setCompareLoading(false);
+      return;
+    }
 
-      const defaults = DEFAULT_METRICS[category] || DEFAULT_METRICS["Large Cap"];
-      
-      return {
-        ...fund,
-        category,
-        risk: defaults.risk,
-        // Deterministic mock values based on fund name
-        nav: parseFloat((50 + (fund.fund_name.length * 1.5) % 950).toFixed(2)),
-        returns_1y: defaults.returns_1y + ((fund.fund_name.charCodeAt(0) % 10) - 5) * 0.5,
-        returns_3y: defaults.returns_3y + ((fund.fund_name.charCodeAt(1) % 10) - 5) * 0.4,
-        returns_5y: defaults.returns_5y + ((fund.fund_name.charCodeAt(2) % 10) - 5) * 0.3,
-        expense_ratio: defaults.expense_ratio + ((fund.fund_name.charCodeAt(3) % 10) - 5) * 0.02,
-        aum: `${(20 + (fund.fund_name.length * 2) % 60).toFixed(1)}K Cr`,
-        fund_manager: ["Rahul Baijal", "Anish Tawakley", "Sohini Andani", "Chirag Setalvad", "Shreyash Devalkar"][idx % 5],
-        rating: defaults.rating,
-        min_investment: defaults.min_investment,
-        top_holdings: fund.top_holdings || []
-      };
-    });
+    const fetchDetails = async () => {
+      setCompareLoading(true);
+      try {
+        const { data } = await api.post("/compare/details", {
+          schemes: selectedSchemes,
+        });
+        const ordered = selectedSchemes
+          .map((name) =>
+            (data.funds || []).find(
+              (fund) => fund.scheme_name.toLowerCase() === name.toLowerCase()
+            )
+          )
+          .filter(Boolean);
+        setSelectedFunds(ordered);
+        setError("");
+      } catch (err) {
+        console.error("Failed to load comparison data:", err);
+        setError(
+          err?.response?.data?.message ||
+            "Unable to load comparison data. Please modify your selection and try again."
+        );
+      } finally {
+        setCompareLoading(false);
+      }
+    };
 
-    // Deduplicate by name
-    return Array.from(new Map(enriched.map(item => [item.fund_name, item])).values());
-  }, [rawFunds]);
+    fetchDetails();
+  }, [selectedSchemes]);
 
   const handleAddFund = (fund) => {
-    if (selectedFunds.length < 5) {
-      setSelectedFunds(prev => [...prev, fund]);
+    if (!fund || selectedSchemes.includes(fund.scheme_name)) {
+      return;
     }
+    if (selectedSchemes.length >= 5) {
+      return;
+    }
+    setSelectedSchemes((prev) => [...prev, fund.scheme_name]);
   };
 
-  const handleRemoveFund = (fund) => {
-    setSelectedFunds(prev => prev.filter(f => f.fund_name !== fund.fund_name));
+  const handleRemoveFund = (schemeName) => {
+    setSelectedSchemes((prev) => prev.filter((name) => name !== schemeName));
   };
 
-  if (loading) {
+  if (listLoading) {
     return (
       <Container maxW="container.xl" py={20}>
         <Flex justify="center" align="center" direction="column">
           <Spinner size="xl" color="brand.500" thickness="4px" />
-          <Text mt={4} color="gray.500" fontWeight="medium">Loading fund data from distribution...</Text>
+          <Text mt={4} color="gray.500" fontWeight="medium">
+            Loading the latest fund list...
+          </Text>
         </Flex>
       </Container>
     );
@@ -422,42 +550,63 @@ const ComparePage = () => {
     <Container maxW="container.xl" py={8}>
       <VStack spacing={8} align="stretch">
         <VStack align="start" spacing={1}>
-          <Heading size="xl" letterSpacing="tight" color="gray.800">Compare Mutual Funds</Heading>
-          <Text color="gray.500" fontSize="lg">Analyze and compare high-performing funds to boost your portfolio.</Text>
+          <Heading size="xl" letterSpacing="tight" color="gray.800">
+            Compare Mutual Funds
+          </Heading>
+          <Text color="gray.500" fontSize="lg">
+            Analyze and compare high-performing funds to boost your portfolio.
+          </Text>
         </VStack>
+
+        {error && (
+          <Alert status="error" borderRadius="xl">
+            <AlertIcon />
+            <Text fontSize="sm">{error}</Text>
+          </Alert>
+        )}
 
         <Card borderRadius="2xl" boxShadow="sm" overflow="visible" variant="outline">
           <CardBody p={8}>
-            <CompareSelector 
-              selectedFunds={selectedFunds} 
-              onAdd={handleAddFund} 
+            <CompareSelector
+              selectedSchemes={selectedSchemes}
+              onAdd={handleAddFund}
               onRemove={handleRemoveFund}
               availableFunds={availableFunds}
             />
           </CardBody>
         </Card>
 
-        {selectedFunds.length === 0 ? (
-          <EmptyState onSelect={() => document.querySelector('input')?.focus()} />
+        {selectedSchemes.length === 0 ? (
+          <EmptyState onSelect={() => document.querySelector("input")?.focus()} />
         ) : (
           <VStack align="stretch" spacing={6}>
-            {selectedFunds.length < 2 && (
+            {selectedSchemes.length < 2 && (
               <Box p={4} bg="brand.50" borderRadius="xl" border="1px" borderColor="brand.200">
                 <HStack>
                   <Icon as={FiInfo} color="brand.500" />
-                  <Text fontSize="sm" color="brand.700" fontWeight="medium">Select at least one more fund to enable side-by-side comparison.</Text>
+                  <Text fontSize="sm" color="brand.700" fontWeight="medium">
+                    Select at least one more fund to enable side-by-side comparison.
+                  </Text>
                 </HStack>
               </Box>
             )}
-            
+
             <Card borderRadius="2xl" boxShadow="md" overflow="hidden" variant="outline">
               <CardBody p={0}>
                 <Box p={8}>
-                  {selectedFunds.length >= 2 ? (
+                  {compareLoading && (
+                    <Flex justify="center" align="center" py={10}>
+                      <Spinner size="lg" color="brand.500" mr={3} />
+                      <Text color="gray.500">Fetching comparison data...</Text>
+                    </Flex>
+                  )}
+                  {!compareLoading && selectedFunds.length >= 2 ? (
                     <CompareTable selectedFunds={selectedFunds} onRemove={handleRemoveFund} />
                   ) : (
                     <Box textAlign="center" py={10}>
-                      <Text color="gray.400" fontSize="md">Ready to compare? Add another fund!</Text>
+                      <Text color="gray.400" fontSize="md">
+                        Ready to compare? Add another fund!
+                      </Text>
                     </Box>
                   )}
                 </Box>
@@ -474,11 +623,23 @@ const ComparePage = () => {
                     <Heading size="sm">Quick Analysis</Heading>
                   </HStack>
                   <Text fontSize="sm" color="gray.600" lineHeight="tall">
-                    {selectedFunds.length >= 2 ? (
-                      `Comparing ${selectedFunds.length} funds. ${selectedFunds.sort((a, b) => b.returns_3y - a.returns_3y)[0].fund_name} leads with a ${selectedFunds.sort((a, b) => b.returns_3y - a.returns_3y)[0].returns_3y.toFixed(2)}% 3-year return.`
-                    ) : (
-                      "Add more funds to generate a summary analysis."
-                    )}
+                    {selectedFunds.length >= 2
+                      ? (() => {
+                          const ranked = selectedFunds
+                            .filter((fund) => sanitizeNumber(fund.return_3y_regular) !== null)
+                            .sort(
+                              (a, b) =>
+                                sanitizeNumber(b.return_3y_regular) -
+                                sanitizeNumber(a.return_3y_regular)
+                            );
+                          if (!ranked.length) {
+                            return "Comparison ready. The selected funds will appear as soon as their data is available.";
+                          }
+                          const leader = ranked[0];
+                          const leaderReturn = sanitizeNumber(leader.return_3y_regular);
+                          return `Comparing ${selectedFunds.length} funds. ${leader.scheme_name} leads with a ${leaderReturn?.toFixed(2)}% 3-year return.`;
+                        })()
+                      : "Add more funds to generate a summary analysis."}
                   </Text>
                 </CardBody>
               </Card>
@@ -491,11 +652,15 @@ const ComparePage = () => {
                     <Heading size="sm">Smart Tip</Heading>
                   </HStack>
                   <Text fontSize="sm" color="gray.600" lineHeight="tall">
-                    A lower Expense Ratio can significantly impact long-term wealth. Look for the <FiCheckCircle style={{display:'inline', color:'#48BB78'}} /> icon in the table to see the best value.
+                    A diversified return profile beats chasing a single metric. Look for the
+                    <FiCheckCircle style={{ display: "inline", color: "#48BB78", margin: "0 4px" }} />
+                    icon in the table to spot the strongest metric for each row.
                   </Text>
                 </CardBody>
               </Card>
             </SimpleGrid>
+
+            {selectedFunds.length > 0 && <FullFundDetails funds={selectedFunds} />}
           </VStack>
         )}
       </VStack>
