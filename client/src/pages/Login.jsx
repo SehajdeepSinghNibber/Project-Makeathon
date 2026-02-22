@@ -141,9 +141,11 @@ const Login = () => {
                           <FormControl isRequired>
                             <FormLabel fontSize="sm" fontWeight="700" color={"gray"}>Full Name</FormLabel>
                             <Input
+                              color={"black"}
                               type="text"
                               name="name"
                               placeholder="John Doe"
+                              _placeholder={{ color: "gray" }}
                               value={formData.name}
                               onChange={handleChange}
                               h="12"
@@ -153,7 +155,8 @@ const Login = () => {
                           <FormControl isRequired>
                             <FormLabel fontSize="sm" fontWeight="700" color={"gray"}>Age</FormLabel>
                             <Input
-                              color={"gray"}
+                              color={"black"}
+                              _placeholder={{color: "gray"}}
                               type="number"
                               name="age"
                               placeholder="25"
