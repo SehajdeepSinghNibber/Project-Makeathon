@@ -19,6 +19,7 @@ import ExpertAdvice from "./pages/ExpertAdvice.jsx";
 import DashboardLayout from "./components/DashboardLayout";
 
 import Compare from "./pages/Compare.jsx";
+import Schedule from "./pages/Schedule.jsx";
 
 function AppContent() {
   const { user } = useAuth();
@@ -68,6 +69,14 @@ function AppContent() {
             element={user ? (
               <DashboardLayout>
                 <Compare />
+              </DashboardLayout>
+            ) : <Navigate to="/login" />}
+          />
+          <Route
+            path="/schedule"
+            element={user ? (
+              <DashboardLayout>
+                <Schedule />
               </DashboardLayout>
             ) : <Navigate to="/login" />}
           />

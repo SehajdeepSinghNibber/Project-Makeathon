@@ -31,7 +31,7 @@ import {
   Icon,
   Spinner,
 } from '@chakra-ui/react';
-import { FiPlus, FiTrash2, FiInfo, FiTrendingUp, FiArrowRight, FiCheckCircle, FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import { FiPlus, FiTrash2, FiInfo, FiBarChart2, FiArrowRight, FiCheckCircle, FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import { SearchIcon } from '@chakra-ui/icons';
 
 const DEFAULT_METRICS = {
@@ -64,7 +64,7 @@ const EmptyState = ({ onSelect }) => (
     <CardBody>
       <VStack spacing={6}>
         <Box p={6} bg="brand.50" borderRadius="full">
-          <Icon as={FiTrendingUp} fontSize="4xl" color="brand.500" />
+          <Icon as={FiBarChart2} fontSize="4xl" color="brand.500" />
         </Box>
         <VStack spacing={2}>
           <Heading size="lg">Compare Mutual Funds</Heading>

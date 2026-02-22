@@ -14,11 +14,12 @@ import {
 import logo from "../public/Gemini_Generated_Image_3nfx7p3nfx7p3nfx (1).png";
 import {
   FiHome,
-  FiTrendingUp,
+  FiBarChart2,
   FiPieChart,
   FiSettings,
   FiUser,
   FiActivity,
+  FiCalendar,
 } from "react-icons/fi";
 
 const NavItem = ({ icon, children, active, href }) => {
@@ -110,11 +111,18 @@ const Sidebar = ({ currentPath }) => {
             Expert Advice
           </NavItem>
           <NavItem
-            icon={FiTrendingUp}
+            icon={FiBarChart2}
             active={currentPath === "/compare"}
             href="/compare"
           >
             Compare MFs
+          </NavItem>
+          <NavItem
+            icon={FiCalendar}
+            active={currentPath === "/schedule"}
+            href="/schedule"
+          >
+            Schedule
           </NavItem>
         </VStack>
 

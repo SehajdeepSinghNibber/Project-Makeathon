@@ -156,13 +156,55 @@ const ExpertAdvice = () => {
       return;
     }
 
-    window.open("https://meet.google.com/new", "_blank");
+    // Map "10 AM" to 24h format for datetime calculation
+    const hourMap = {
+      "10 AM": 10,
+      "11 AM": 11,
+      "2 PM": 14,
+      "4 PM": 16,
+    };
+
+    const hour = hourMap[formData.time] || 10;
+    const meetingDatetime = new Date(formData.date);
+    meetingDatetime.setHours(hour, 0, 0, 0);
+
+    // Validation: Prevent scheduling in the past
+    if (meetingDatetime < new Date()) {
+      toast({
+        title: "Invalid Date/Time",
+        description: "You cannot schedule a meeting in the past.",
+        status: "error",
+        duration: 3000,
+      });
+      return;
+    }
+
+    const meetingId = `meet-${Math.random().toString(36).substr(2, 9)}`;
+    const randomSuffix = Math.random().toString(36).substr(2, 3) + '-' + 
+                        Math.random().toString(36).substr(2, 4) + '-' + 
+                        Math.random().toString(36).substr(2, 3);
+    
+    const newMeeting = {
+      id: meetingId,
+      title: `Consultation with ${selectedConsultant.name}`,
+      date: formData.date,
+      time: formData.time,
+      datetime: meetingDatetime.toISOString(),
+      status: "upcoming",
+      meetLink: `https://meet.google.com/${randomSuffix}`,
+      createdAt: new Date().toISOString()
+    };
+
+    // Save to localStorage
+    const existingMeetings = JSON.parse(localStorage.getItem("nivesh_meetings") || "[]");
+    localStorage.setItem("nivesh_meetings", JSON.stringify([...existingMeetings, newMeeting]));
 
     toast({
-      title: "Meeting Scheduled",
-      description: `Meeting with ${selectedConsultant.name}`,
+      title: "Meeting Scheduled Successfully",
+      description: `Your session with ${selectedConsultant.name} is confirmed for ${formData.date} at ${formData.time}.`,
       status: "success",
-      duration: 3000,
+      duration: 5000,
+      isClosable: true,
     });
 
     onClose();
@@ -212,7 +254,7 @@ const ExpertAdvice = () => {
                 </HStack>
 
                 <Button
-                  leftIcon={<FaGoogle />}
+                  leftIcon={<FaCalendar />}
                   variant="outline"
                   colorScheme="brand"
                   onClick={() => handleScheduleMeet(c)}
@@ -228,69 +270,74 @@ const ExpertAdvice = () => {
 
       {/* Modal */}
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
-        <ModalOverlay />
-        <ModalContent>
+        <ModalOverlay backdropFilter="blur(4px)" />
+        <ModalContent borderRadius="2xl">
           <ModalHeader>Schedule with {selectedConsultant?.name}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Stack spacing={4}>
-              <FormControl>
-                <FormLabel>Name</FormLabel>
+              <FormControl isRequired>
+                <FormLabel>Your Name</FormLabel>
                 <Input
                   name="name"
+                  placeholder="Enter your name"
                   value={formData.name}
                   onChange={handleChange}
                 />
               </FormControl>
 
-              <FormControl>
-                <FormLabel>Email</FormLabel>
+              <FormControl isRequired>
+                <FormLabel>Email Address</FormLabel>
                 <Input
                   type="email"
                   name="email"
+                  placeholder="Enter your email"
                   value={formData.email}
                   onChange={handleChange}
                 />
               </FormControl>
 
-              <FormControl>
-                <FormLabel>Date</FormLabel>
+              <FormControl isRequired>
+                <FormLabel>Select Date</FormLabel>
                 <Input
                   type="date"
                   name="date"
+                  min={new Date().toISOString().split('T')[0]}
                   value={formData.date}
                   onChange={handleChange}
                 />
               </FormControl>
 
-              <FormControl>
-                <FormLabel>Time</FormLabel>
+              <FormControl isRequired>
+                <FormLabel>Preferred Time Slot</FormLabel>
                 <Select
                   name="time"
+                  placeholder="Select time"
                   value={formData.time}
                   onChange={handleChange}
                 >
-                  <option value="10 AM">10 AM</option>
-                  <option value="11 AM">11 AM</option>
-                  <option value="2 PM">2 PM</option>
-                  <option value="4 PM">4 PM</option>
+                  <option value="10 AM">10 AM (Morning)</option>
+                  <option value="11 AM">11 AM (Morning)</option>
+                  <option value="2 PM">2 PM (Afternoon)</option>
+                  <option value="4 PM">4 PM (Evening)</option>
                 </Select>
               </FormControl>
             </Stack>
           </ModalBody>
 
           <ModalFooter>
-            <Button mr={3} onClick={onClose}>
+            <Button mr={3} onClick={onClose} variant="ghost" borderRadius="full">
               Cancel
             </Button>
             <Button
-              variant="outline"
               colorScheme="brand"
-              leftIcon={<FaGoogle />}
+              leftIcon={<FaCalendar />}
               onClick={handleSubmit}
               borderRadius="full"
+              px={8}
+              color="white"
             >
-              Start Meet
+              Schedule Meet
             </Button>
           </ModalFooter>
         </ModalContent>
