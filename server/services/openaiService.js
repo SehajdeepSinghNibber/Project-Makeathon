@@ -69,12 +69,16 @@ const generateAIInsights = async ({
       ? buildDetailedPrompt(userType, analysisData, portfolioData)
       : buildPrompt(userType, answers, portfolioData)
 
+    //   console.log("Generated prompt for MegaLLM:", prompt)
+
     const response = await megaLLM.responses.create({
       model: MODEL,
       temperature: 0.3,
       max_output_tokens: 2048,
       input: prompt
     })
+
+    // console.log("MegaLLM raw response:", response);
 
     const text = extractResponseText(response)
     const sanitized = sanitizeJSON(text)
@@ -112,9 +116,6 @@ ${formattedSectors}
 
 DIVERSIFICATION ASSESSMENT:
 ${formattedDivScore}
-
-POTENTIAL SECTORS TO ADD:
-${formattedPotentialSectors}
 
 CRITICAL INSTRUCTIONS:
 - Reference SPECIFIC shares and sectors from the analysis
