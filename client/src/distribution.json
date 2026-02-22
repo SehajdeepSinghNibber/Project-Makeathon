@@ -824,7 +824,9 @@
         "fund_name": "ICICI Prudential Large Cap Fund",
         "fund_identifier": "",
         "as_of_date": "2026-01-31",
-        "data_source_urls": ["https://www.icicipruamc.com/"],
+        "data_source_urls": [
+          "https://www.icicipruamc.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -903,7 +905,9 @@
         "fund_name": "DSP Large Cap Fund",
         "fund_identifier": "",
         "as_of_date": "2026-01-31",
-        "data_source_urls": ["https://www.dspim.com/"],
+        "data_source_urls": [
+          "https://www.dspim.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -982,7 +986,9 @@
         "fund_name": "Bandhan Large Cap Fund",
         "fund_identifier": "",
         "as_of_date": "2026-01-31",
-        "data_source_urls": ["https://bandhanmutual.com/"],
+        "data_source_urls": [
+          "https://bandhanmutual.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -1061,7 +1067,9 @@
         "fund_name": "Invesco India Largecap Fund",
         "fund_identifier": "",
         "as_of_date": "2026-01-31",
-        "data_source_urls": ["https://www.invescomutualfund.com/"],
+        "data_source_urls": [
+          "https://www.invescomutualfund.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -1140,7 +1148,9 @@
         "fund_name": "Aditya Birla Sun Life Large Cap Fund",
         "fund_identifier": "",
         "as_of_date": "2026-02-20",
-        "data_source_urls": ["https://mutualfund.adityabirlacapital.com/"],
+        "data_source_urls": [
+          "https://mutualfund.adityabirlacapital.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -1219,7 +1229,9 @@
         "fund_name": "SBI Large Cap Fund",
         "fund_identifier": "",
         "as_of_date": "2026-01-31",
-        "data_source_urls": ["https://www.sbimf.com/"],
+        "data_source_urls": [
+          "https://www.sbimf.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -1298,7 +1310,9 @@
         "fund_name": "Quant Large Cap Fund",
         "fund_identifier": "",
         "as_of_date": "2026-02-19",
-        "data_source_urls": ["https://quantmutual.com/"],
+        "data_source_urls": [
+          "https://quantmutual.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -1377,7 +1391,9 @@
         "fund_name": "LIC MF Large Cap Fund",
         "fund_identifier": "",
         "as_of_date": "2025-12-31",
-        "data_source_urls": ["https://www.licmf.com/"],
+        "data_source_urls": [
+          "https://www.licmf.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -1456,7 +1472,9 @@
         "fund_name": "Sundaram Large Cap Fund",
         "fund_identifier": "",
         "as_of_date": "2026-02-05",
-        "data_source_urls": ["https://www.sundarammutual.com/"],
+        "data_source_urls": [
+          "https://www.sundarammutual.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -1535,7 +1553,9 @@
         "fund_name": "Franklin India Large Cap Fund",
         "fund_identifier": "",
         "as_of_date": "2025-12-31",
-        "data_source_urls": ["https://www.franklintempletonindia.com/"],
+        "data_source_urls": [
+          "https://www.franklintempletonindia.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -1614,7 +1634,9 @@
         "fund_name": "Baroda BNP Paribas Large Cap Fund",
         "fund_identifier": "",
         "as_of_date": "2026-02-15",
-        "data_source_urls": ["https://www.barodabnpparibasmf.in/"],
+        "data_source_urls": [
+          "https://www.barodabnpparibasmf.in/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -2229,7 +2251,9 @@
         "fund_name": "Edelweiss Mid Cap Fund",
         "fund_identifier": "",
         "as_of_date": "2025-05-31",
-        "data_source_urls": ["https://www.edelweissmf.com/"],
+        "data_source_urls": [
+          "https://www.edelweissmf.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -2308,7 +2332,9 @@
         "fund_name": "Nippon India Growth Fund",
         "fund_identifier": "",
         "as_of_date": "2025-12-31",
-        "data_source_urls": ["https://mf.nipponindiaim.com/"],
+        "data_source_urls": [
+          "https://mf.nipponindiaim.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -2945,7 +2971,9 @@
         "fund_name": "HDFC Balanced Advantage Fund",
         "fund_identifier": "",
         "as_of_date": "2025-11-30",
-        "data_source_urls": ["https://www.hdfcfund.com/"],
+        "data_source_urls": [
+          "https://www.hdfcfund.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -3024,7 +3052,9 @@
         "fund_name": "ICICI Prudential Equity & Debt Fund",
         "fund_identifier": "",
         "as_of_date": "2026-01-30",
-        "data_source_urls": ["https://www.icicipruamc.com/"],
+        "data_source_urls": [
+          "https://www.icicipruamc.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -3103,7 +3133,9 @@
         "fund_name": "SBI Equity Hybrid Fund",
         "fund_identifier": "",
         "as_of_date": "2026-01-31",
-        "data_source_urls": ["https://www.sbimf.com/"],
+        "data_source_urls": [
+          "https://www.sbimf.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -3182,7 +3214,9 @@
         "fund_name": "Kotak Equity Arbitrage Fund",
         "fund_identifier": "",
         "as_of_date": "2025-12-31",
-        "data_source_urls": ["https://www.kotakmf.com/"],
+        "data_source_urls": [
+          "https://www.kotakmf.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -3819,7 +3853,9 @@
         "fund_name": "HDFC Flexi Cap Fund",
         "fund_identifier": "",
         "as_of_date": "2025-12-31",
-        "data_source_urls": ["https://www.hdfcfund.com/"],
+        "data_source_urls": [
+          "https://www.hdfcfund.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -3898,7 +3934,9 @@
         "fund_name": "Parag Parikh Flexi Cap Fund",
         "fund_identifier": "",
         "as_of_date": "2026-02-20",
-        "data_source_urls": ["https://amc.ppfas.com/"],
+        "data_source_urls": [
+          "https://amc.ppfas.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -3977,7 +4015,9 @@
         "fund_name": "Kotak Flexi Cap Fund",
         "fund_identifier": "",
         "as_of_date": "2025-12-31",
-        "data_source_urls": ["https://www.kotakmf.com/"],
+        "data_source_urls": [
+          "https://www.kotakmf.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -4056,7 +4096,9 @@
         "fund_name": "Axis Flexi Cap Fund",
         "fund_identifier": "",
         "as_of_date": "2026-01-31",
-        "data_source_urls": ["https://www.axismf.com/"],
+        "data_source_urls": [
+          "https://www.axismf.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -4693,7 +4735,9 @@
         "fund_name": "Nippon India Small Cap Fund",
         "fund_identifier": "",
         "as_of_date": "2026-01-31",
-        "data_source_urls": ["https://mf.nipponindiaim.com/"],
+        "data_source_urls": [
+          "https://mf.nipponindiaim.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -4772,7 +4816,9 @@
         "fund_name": "Bandhan Small Cap Fund",
         "fund_identifier": "",
         "as_of_date": "2026-01-31",
-        "data_source_urls": ["https://bandhanmutual.com/"],
+        "data_source_urls": [
+          "https://bandhanmutual.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -4851,7 +4897,9 @@
         "fund_name": "SBI Small Cap Fund",
         "fund_identifier": "",
         "as_of_date": "2025-12-31",
-        "data_source_urls": ["https://www.sbimf.com/"],
+        "data_source_urls": [
+          "https://www.sbimf.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -5567,7 +5615,9 @@
         "fund_name": "Nippon India Multi Cap Fund",
         "fund_identifier": "",
         "as_of_date": "2026-01-26",
-        "data_source_urls": ["https://mf.nipponindiaim.com/"],
+        "data_source_urls": [
+          "https://mf.nipponindiaim.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -5646,7 +5696,9 @@
         "fund_name": "Mirae Asset Large & Midcap Fund",
         "fund_identifier": "",
         "as_of_date": "2026-01-31",
-        "data_source_urls": ["https://www.miraeassetmf.co.in/"],
+        "data_source_urls": [
+          "https://www.miraeassetmf.co.in/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
@@ -5725,7 +5777,9 @@
         "fund_name": "Aditya Birla Sun Life Equity Advantage Fund",
         "fund_identifier": "",
         "as_of_date": "2025-12-31",
-        "data_source_urls": ["https://mutualfund.adityabirlacapital.com/"],
+        "data_source_urls": [
+          "https://mutualfund.adityabirlacapital.com/"
+        ],
         "top_holdings": [
           {
             "rank": 1,
