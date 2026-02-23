@@ -4,13 +4,13 @@ const crypto = require('crypto')
 // Generate access token (short-lived)
 const generateAccessToken = (userId, email) => {
   return jwt.sign(
-    { 
-      userId, 
+    {
+      userId,
       email,
       type: 'access'
     },
     process.env.JWT_SECRET,
-    { expiresIn: '15m' } // Short-lived access token
+    { expiresIn: '3h' }
   )
 }
 
